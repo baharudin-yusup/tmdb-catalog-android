@@ -1,6 +1,7 @@
-package dev.baharudin.themoviedb.data.models.get_movie_list
+package dev.baharudin.themoviedb.data.models.remote.get_movie_list
 
 import com.google.gson.annotations.SerializedName
+import dev.baharudin.themoviedb.domain.entities.Genre
 import dev.baharudin.themoviedb.domain.entities.Movie
 
 data class MovieResponse(
@@ -19,9 +20,9 @@ data class MovieResponse(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
 ) {
-    fun toEntity() = Movie(
+    fun toEntity(genres: List<Genre>) = Movie(
         backdropPath = backdropPath,
-        genreIds = genreIds,
+        genres = genres,
         id = id,
         originalLanguage = originalLanguage,
         originalTitle = originalTitle,

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baharudin.themoviedb.R
 import dev.baharudin.themoviedb.databinding.FragmentMovieListBinding
+import dev.baharudin.themoviedb.presentation.common.LoadAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject

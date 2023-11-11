@@ -1,4 +1,4 @@
-package dev.baharudin.themoviedb.data.models.get_genre_list
+package dev.baharudin.themoviedb.data.models.remote.get_genre_list
 
 import com.google.gson.annotations.SerializedName
 

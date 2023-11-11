@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/img_movie_thumbnail"
+            android:id="@+id/iv_movie_thumbnail"
             android:layout_width="90dp"
             android:layout_height="135dp"
             android:importantForAccessibility="no"
@@ -29,29 +29,43 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            android:layout_toEndOf="@id/img_movie_thumbnail"
+            android:layout_toEndOf="@id/iv_movie_thumbnail"
             android:textSize="17sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/img_movie_thumbnail"
-            card_view:layout_constraintTop_toTopOf="@+id/img_movie_thumbnail"
+            card_view:layout_constraintStart_toEndOf="@+id/iv_movie_thumbnail"
+            card_view:layout_constraintTop_toTopOf="@+id/iv_movie_thumbnail"
             tools:text="@tools:sample/full_names" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_movie_storyline"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="4dp"
             android:ellipsize="end"
             android:maxLength="200"
-            android:maxLines="5"
-            card_view:layout_constraintBottom_toBottomOf="@+id/img_movie_thumbnail"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_movie_title"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_movie_title"
+            android:maxLines="4"
+            card_view:layout_constraintBottom_toTopOf="@id/rv_genres"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@id/iv_movie_thumbnail"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
             card_view:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="6dp"
+            android:clipToPadding="false"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@id/iv_movie_thumbnail"
+            tools:ignore="RtlSymmetry" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

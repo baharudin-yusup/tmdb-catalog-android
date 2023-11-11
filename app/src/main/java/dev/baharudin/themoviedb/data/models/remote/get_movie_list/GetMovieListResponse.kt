@@ -1,4 +1,4 @@
-package dev.baharudin.themoviedb.data.models.get_movie_list
+package dev.baharudin.themoviedb.data.models.remote.get_movie_list
 
 import com.google.gson.annotations.SerializedName
 

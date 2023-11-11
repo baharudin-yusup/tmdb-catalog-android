@@ -13,7 +13,7 @@ import dev.baharudin.themoviedb.domain.usecases.DiscoverMoviesByGenre
 
 class MovieListViewModel @AssistedInject constructor(
     @Assisted private val genre: Genre,
-    private val discoverMoviesByGenre: DiscoverMoviesByGenre,
+    discoverMoviesByGenre: DiscoverMoviesByGenre,
 ) : ViewModel() {
 
     @Suppress("UNCHECKED_CAST")

@@ -25,4 +25,9 @@
     <string name="please_try_again">Oops! please try again!</string>
 
     <string name="rating">%1$.1f / 10</string>
+
+    <string name="info">Info</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No reviews</string>
+    <string name="read_more">Read more...</string>
 </resources>
