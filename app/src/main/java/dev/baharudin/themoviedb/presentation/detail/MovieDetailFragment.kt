@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baharudin.themoviedb.R
 import dev.baharudin.themoviedb.databinding.FragmentMovieDetailBinding
+import dev.baharudin.themoviedb.presentation.common.toImageUrl
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
@@ -49,7 +50,7 @@ class MovieDetailFragment : Fragment() {
         drawable.strokeWidth = 10f;
         drawable.start()
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/original" + movie.posterPath)
+            .load(movie.posterPath.toImageUrl())
             .centerCrop()
             .placeholder(drawable)
             .into(binding.ivMovieThumbnail)
