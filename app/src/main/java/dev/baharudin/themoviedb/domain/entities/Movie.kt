@@ -9,7 +9,7 @@ data class Movie(
     val overview: String,
     val posterPath: String,
     val backdropPath: String,
-    val genreIds: ArrayList<Int>,
+    val genres: List<Genre>,
     val id: Int,
     val originalLanguage: String,
     val originalTitle: String,

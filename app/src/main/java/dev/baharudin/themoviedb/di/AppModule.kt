@@ -1,12 +1,18 @@
 package dev.baharudin.themoviedb.di
 
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.baharudin.themoviedb.BuildConfig
 import dev.baharudin.themoviedb.data.repositories.MovieRepositoryImpl
-import dev.baharudin.themoviedb.data.sources.api.TheMovieDBApi
+import dev.baharudin.themoviedb.data.sources.local.db.AppDatabase
+import dev.baharudin.themoviedb.data.sources.local.db.GenreDao
+import dev.baharudin.themoviedb.data.sources.remote.TheMovieDBApi
 import dev.baharudin.themoviedb.domain.repositories.MovieRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,6 +24,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "database"
+        ).allowMainThreadQueries().build()
+    }
+
     @Singleton
     @Provides
     fun provideHttpClient(): OkHttpClient {
@@ -54,13 +70,18 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideGenreDao(appDatabase: AppDatabase): GenreDao = appDatabase.genreDao()
+
+    @Provides
+    @Singleton
     fun provideTheMovieDBApi(retrofit: Retrofit): TheMovieDBApi =
         retrofit.create(TheMovieDBApi::class.java)
 
     @Provides
     @Singleton
     fun provideMovieRepository(
+        genreDao: GenreDao,
         theMovieDBApi: TheMovieDBApi
     ): MovieRepository =
-        MovieRepositoryImpl(theMovieDBApi)
+        MovieRepositoryImpl(genreDao, theMovieDBApi)
 }

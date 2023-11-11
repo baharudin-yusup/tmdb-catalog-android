@@ -11,6 +11,8 @@ import dev.baharudin.themoviedb.domain.entities.Movie
 import dev.baharudin.themoviedb.domain.usecases.GetMovieGenres
 import dev.baharudin.themoviedb.presentation.common.DataPaginationState
 import dev.baharudin.themoviedb.presentation.common.DataState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -29,15 +31,12 @@ class HomeViewModel @Inject constructor(
     private val _popularMovieList = MutableLiveData(DataPaginationState<Movie>())
 
     val genreList: LiveData<DataState<List<Genre>>> = _genreList
-    val popularMovieList: LiveData<DataPaginationState<Movie>> = _popularMovieList
 
     init {
-        viewModelScope.launch {
-            fetchMovieGenre()
-        }
+        fetchMovieGenre()
     }
 
-     fun fetchMovieGenre() {
+    fun fetchMovieGenre() {
         if (_genreList.value?.isLoading != false) {
             return
         }

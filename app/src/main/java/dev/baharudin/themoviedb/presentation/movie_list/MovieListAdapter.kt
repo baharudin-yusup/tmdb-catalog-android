@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import dev.baharudin.themoviedb.databinding.ItemMovieCardBinding
+import dev.baharudin.themoviedb.domain.entities.Genre
 import dev.baharudin.themoviedb.domain.entities.Movie
 
 class MovieListAdapter(
@@ -32,14 +34,14 @@ class MovieListAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie?) {
-            movie?.let {
-                with(binding) {
-                    tvMovieTitle.text = movie.title
-                    tvMovieStoryline.text = movie.overview
-                    setThumbnail(movie.posterPath, imgMovieThumbnail)
-                    root.setOnClickListener { onClick(movie) }
-                }
+            if (movie == null) return
+            with(binding) {
+                tvMovieTitle.text = movie.title
+                tvMovieStoryline.text = movie.overview
+                setThumbnail(movie.posterPath, ivMovieThumbnail)
+                root.setOnClickListener { onClick(movie) }
             }
+            setupGenreList(movie.genres)
         }
 
         private fun setThumbnail(path: String, imageView: ImageView) {
@@ -53,6 +55,17 @@ class MovieListAdapter(
                 .centerCrop()
                 .placeholder(drawable)
                 .into(imageView)
+        }
+
+        private fun setupGenreList(genres: List<Genre>) {
+            val movieGenreListAdapter = MovieGenreListAdapter(genres)
+            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.rvGenres.apply {
+                adapter = movieGenreListAdapter
+                setHasFixedSize(true)
+                layoutManager = linearLayoutManager
+                adapter = movieGenreListAdapter
+            }
         }
     }
 

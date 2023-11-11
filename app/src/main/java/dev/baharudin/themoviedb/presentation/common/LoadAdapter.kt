@@ -1,6 +1,5 @@
-package dev.baharudin.themoviedb.presentation.movie_list
+package dev.baharudin.themoviedb.presentation.common
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible

@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.detail.DetailFragment">
+    tools:context=".presentation.detail.MovieDetailFragment">
 
     <LinearLayout
+        android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:layout_marginHorizontal="16dp"
@@ -16,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/img_movie_thumbnail"
+            android:id="@+id/iv_movie_thumbnail"
             android:layout_width="83dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
@@ -80,6 +81,26 @@
                     tools:text="9.0/10" />
             </LinearLayout>
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_header">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_root"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 

@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     suspend fun getMovieGenres(): List<Genre>
     fun discoverMoviesByGenre(genre: Genre): Flow<PagingData<Movie>>
-    suspend fun getMovieReviews(movie: Movie, page: Int = 1): List<Review>
+    fun getMovieReviews(movie: Movie): Flow<PagingData<Review>>
 }

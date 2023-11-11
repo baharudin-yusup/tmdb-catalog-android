@@ -1,11 +1,11 @@
 buildscript {
     extra.apply {
         set("hiltVersion", "2.48")
-        set("navVersion", "2.7.4")
+        set("navVersion", "2.7.5")
     }
 
     dependencies {
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.4")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5")
     }
 }
 

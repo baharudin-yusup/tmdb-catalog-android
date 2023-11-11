@@ -1,4 +1,4 @@
-package dev.baharudin.themoviedb.data.models.get_review_list
+package dev.baharudin.themoviedb.data.models.remote.get_review_list
 
 import com.google.gson.annotations.SerializedName
 

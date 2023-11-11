@@ -20,9 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="dev.baharudin.themoviedb.presentation.detail.DetailFragment"
+        android:name="dev.baharudin.themoviedb.presentation.detail.MovieDetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_movie_detail" >
         <argument
             android:name="movie"
             app:argType="dev.baharudin.themoviedb.domain.entities.Movie" />
@@ -43,5 +43,22 @@
         <action
             android:id="@+id/action_movieListFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieReviewFragment"
+        android:name="dev.baharudin.themoviedb.presentation.detail.movie_review.MovieReviewFragment"
+        android:label="MovieReviewFragment" >
+        <argument
+            android:name="movie"
+            app:argType="dev.baharudin.themoviedb.domain.entities.Movie" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieInfoFragment"
+        android:name="dev.baharudin.themoviedb.presentation.detail.movie_info.MovieInfoFragment"
+        android:label="fragment_movie_info"
+        tools:layout="@layout/fragment_movie_info" >
+        <argument
+            android:name="movie"
+            app:argType="dev.baharudin.themoviedb.domain.entities.Movie" />
     </fragment>
 </navigation>

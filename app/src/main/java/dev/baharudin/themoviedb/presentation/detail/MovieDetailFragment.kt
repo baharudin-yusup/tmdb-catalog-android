@@ -1,6 +1,5 @@
 package dev.baharudin.themoviedb.presentation.detail
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,29 +8,39 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baharudin.themoviedb.R
-import dev.baharudin.themoviedb.databinding.FragmentDetailBinding
+import dev.baharudin.themoviedb.databinding.FragmentMovieDetailBinding
 
 @AndroidEntryPoint
-class DetailFragment : Fragment() {
+class MovieDetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailBinding
-    private val args: DetailFragmentArgs by navArgs()
+    private lateinit var binding: FragmentMovieDetailBinding
+    private val args: MovieDetailFragmentArgs by navArgs()
+
+    private lateinit var movieDetailAdapter: MovieDetailAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupUi()
+    }
+
+    private fun setupUi() {
+        setupHeader()
+        setupViewPager()
+    }
+
+    private fun setupHeader() {
         val movie = args.movie
         binding.tvMovieTitle.text = movie.title
 
@@ -43,10 +52,28 @@ class DetailFragment : Fragment() {
             .load("https://image.tmdb.org/t/p/original" + movie.posterPath)
             .centerCrop()
             .placeholder(drawable)
-            .into(binding.imgMovieThumbnail)
+            .into(binding.ivMovieThumbnail)
 
-//        binding.tvMovieStoryline.text = movie.overview
         binding.tvMovieYear.text = movie.releaseDate
         binding.tvMovieRating.text = getString(R.string.rating, movie.voteAverage)
+    }
+
+    private fun setupViewPager() {
+        movieDetailAdapter = MovieDetailAdapter(this, args.movie)
+
+        with(binding) {
+            vpRoot.adapter = movieDetailAdapter
+            TabLayoutMediator(tlRoot, vpRoot) { tab, position ->
+                when (position) {
+                    0 -> {
+                        tab.text = getString(R.string.info)
+                    }
+
+                    1 -> {
+                        tab.text = getString(R.string.reviews)
+                    }
+                }
+            }.attach()
+        }
     }
 }
