@@ -24,3 +24,5 @@ fun Date.toString(
     formatter.timeZone = timeZone
     return formatter.format(this)
 }
+
+fun String.toImageUrl(): String = "https://image.tmdb.org/t/p/original$this"

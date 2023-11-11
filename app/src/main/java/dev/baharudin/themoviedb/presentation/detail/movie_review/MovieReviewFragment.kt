@@ -55,7 +55,7 @@ class MovieReviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentMovieReviewBinding.inflate(inflater, container, false)
-        movieReviewListAdapter = MovieReviewListAdapter()
+        movieReviewListAdapter = MovieReviewListAdapter(requireContext())
 
         return binding.root
     }
