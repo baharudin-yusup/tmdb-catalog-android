@@ -12,7 +12,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baharudin.themoviedb.R
 import dev.baharudin.themoviedb.databinding.FragmentMovieDetailBinding
+import dev.baharudin.themoviedb.presentation.common.toDate
 import dev.baharudin.themoviedb.presentation.common.toImageUrl
+import dev.baharudin.themoviedb.presentation.common.toString
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
@@ -43,11 +45,12 @@ class MovieDetailFragment : Fragment() {
 
     private fun setupHeader() {
         val movie = args.movie
+
         binding.tvMovieTitle.text = movie.title
 
         val drawable = CircularProgressDrawable(requireContext())
-        drawable.centerRadius = 30f;
-        drawable.strokeWidth = 10f;
+        drawable.centerRadius = 30f
+        drawable.strokeWidth = 10f
         drawable.start()
         Glide.with(this)
             .load(movie.posterPath.toImageUrl())
@@ -55,8 +58,15 @@ class MovieDetailFragment : Fragment() {
             .placeholder(drawable)
             .into(binding.ivMovieThumbnail)
 
-        binding.tvMovieYear.text = movie.releaseDate
+        val releaseDate = movie.releaseDate.toDate(format = "yyyy-MM-dd")
+        releaseDate?.let {
+            binding.tvMovieYear.text = releaseDate.toString(format = "dd MMM yyyy")
+        }
+
+
         binding.tvMovieRating.text = getString(R.string.rating, movie.voteAverage)
+
+
     }
 
     private fun setupViewPager() {
@@ -67,7 +77,7 @@ class MovieDetailFragment : Fragment() {
             TabLayoutMediator(tlRoot, vpRoot) { tab, position ->
                 when (position) {
                     0 -> {
-                        tab.text = getString(R.string.info)
+                        tab.text = getString(R.string.details)
                     }
 
                     1 -> {

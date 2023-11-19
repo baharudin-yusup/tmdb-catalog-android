@@ -26,8 +26,6 @@ import javax.inject.Inject
 class MovieReviewFragment : Fragment() {
 
     companion object {
-
-        private const val TAG = "MovieReviewFragment"
         fun newInstance(movie: Movie): MovieReviewFragment {
             val apply = MovieReviewFragment().apply {
                 arguments = Bundle(1).apply {

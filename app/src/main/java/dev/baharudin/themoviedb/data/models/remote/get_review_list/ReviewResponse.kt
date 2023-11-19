@@ -1,7 +1,6 @@
 package dev.baharudin.themoviedb.data.models.remote.get_review_list
 
 import com.google.gson.annotations.SerializedName
-import dev.baharudin.themoviedb.domain.entities.Review
 
 data class ReviewResponse(
     @SerializedName("author") var author: String,
