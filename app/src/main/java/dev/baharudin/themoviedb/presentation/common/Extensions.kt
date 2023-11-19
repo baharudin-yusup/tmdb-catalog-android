@@ -5,6 +5,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
+@Suppress("SpellCheckingInspection")
 fun String.toDate(
     format: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
     locale: Locale = Locale.getDefault(),

@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import dev.baharudin.themoviedb.databinding.FragmentMovieInfoBinding
 import dev.baharudin.themoviedb.domain.entities.Movie
-import dev.baharudin.themoviedb.presentation.detail.movie_review.MovieReviewFragment
-import dev.baharudin.themoviedb.presentation.detail.movie_review.MovieReviewFragmentArgs
 
 class MovieInfoFragment : Fragment() {
 
@@ -43,8 +41,24 @@ class MovieInfoFragment : Fragment() {
     }
 
     private fun setupUi() {
+        val movie = args.movie
         with(binding) {
-            tvMovieStoryline.text = args.movie.overview
+            tvMovieStoryline.text = movie.overview
+
+            // Setup genre
+            val totalGenre = movie.genres.size
+            val genres = movie.genres.map { it.name }.reduceIndexed { index, s, acc ->
+                if (index == totalGenre - 1) {
+                    if (totalGenre > 2) {
+                        "$s, & $acc"
+                    } else {
+                        "$s & $acc"
+                    }
+                } else {
+                    "$s, $acc"
+                }
+            }
+            tvGenreName.text = genres
         }
     }
 }

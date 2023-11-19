@@ -8,7 +8,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dev.baharudin.themoviedb.domain.entities.Genre
-import dev.baharudin.themoviedb.domain.repositories.MovieRepository
 import dev.baharudin.themoviedb.domain.usecases.DiscoverMoviesByGenre
 
 class MovieListViewModel @AssistedInject constructor(
@@ -18,7 +17,6 @@ class MovieListViewModel @AssistedInject constructor(
 
     @Suppress("UNCHECKED_CAST")
     companion object {
-        private const val TAG = "MovieListViewModel"
         fun providesFactory(
             factory: Factory,
             genre: Genre,

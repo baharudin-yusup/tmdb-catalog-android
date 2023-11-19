@@ -46,8 +46,8 @@ class MovieListAdapter(
 
         private fun setThumbnail(path: String, imageView: ImageView) {
             val drawable = CircularProgressDrawable(context)
-            drawable.centerRadius = 30f;
-            drawable.strokeWidth = 6f;
+            drawable.centerRadius = 30f
+            drawable.strokeWidth = 6f
             drawable.start()
             Glide.with(context)
                 .load("https://image.tmdb.org/t/p/w500$path")
