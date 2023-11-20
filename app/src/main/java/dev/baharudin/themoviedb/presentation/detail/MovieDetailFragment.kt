@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -15,6 +19,7 @@ import dev.baharudin.themoviedb.databinding.FragmentMovieDetailBinding
 import dev.baharudin.themoviedb.presentation.common.toDate
 import dev.baharudin.themoviedb.presentation.common.toImageUrl
 import dev.baharudin.themoviedb.presentation.common.toString
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
@@ -23,6 +28,12 @@ class MovieDetailFragment : Fragment() {
     private val args: MovieDetailFragmentArgs by navArgs()
 
     private lateinit var movieDetailAdapter: MovieDetailAdapter
+
+    @Inject
+    lateinit var factory: MovieDetailViewModel.Factory
+    private val movieDetailViewModel: MovieDetailViewModel by viewModels {
+        MovieDetailViewModel.providesFactory(factory, args.movie)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +50,15 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun setupUi() {
+        setupClickListener()
         setupHeader()
         setupViewPager()
+    }
+
+    private fun setupClickListener() {
+        with(binding) {
+            btnFavorite.setOnClickListener { movieDetailViewModel.toggleFavoriteButton() }
+        }
     }
 
     private fun setupHeader() {
@@ -66,7 +84,15 @@ class MovieDetailFragment : Fragment() {
 
         binding.tvMovieRating.text = getString(R.string.rating, movie.voteAverage)
 
+        movieDetailViewModel.movie.observe(viewLifecycleOwner) {
+            it.data?.let { movie ->
+                renderFavoriteButton(movie.isFavorite)
+            }
 
+            if (it.errorMessage.isNotBlank()) {
+                Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupViewPager() {
@@ -85,6 +111,30 @@ class MovieDetailFragment : Fragment() {
                     }
                 }
             }.attach()
+        }
+    }
+
+    private fun renderFavoriteButton(isFavorite: Boolean) {
+        binding.btnFavorite.apply {
+            when (isFavorite) {
+                true -> {
+                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_on, null)
+                    backgroundTintList =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.colorPrimary)
+                    iconTint =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.white)
+                }
+
+                false -> {
+                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_off, null)
+                    iconTint =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.colorPrimary)
+                    backgroundTintList =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.colorPrimary)
+                    backgroundTintList =
+                        ContextCompat.getColorStateList(requireActivity(), R.color.white)
+                }
+            }
         }
     }
 }

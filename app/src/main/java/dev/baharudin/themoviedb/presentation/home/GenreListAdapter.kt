@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.baharudin.themoviedb.databinding.ItemGenreCardBinding
 import dev.baharudin.themoviedb.domain.entities.Genre
 
-class GenreListAdapter(
+class
+
+
+GenreListAdapter(
     private val genres: List<Genre>,
     private val onClick: (Genre) -> Unit,
 ) :
