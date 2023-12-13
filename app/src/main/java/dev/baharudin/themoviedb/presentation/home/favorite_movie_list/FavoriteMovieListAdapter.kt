@@ -20,13 +20,13 @@ class FavoriteMovieListAdapter(
     private val onClick: (Movie) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        private const val VIEW_TYPE_TITLE = 0;
-        private const val VIEW_TYPE_ITEM = 1;
+        private const val VIEW_TYPE_TITLE = 0
+        private const val VIEW_TYPE_ITEM = 1
     }
 
     inner class MovieListViewHolder(var binding: ItemMovieCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        public fun bind(movie: Movie) {
+        fun bind(movie: Movie) {
             with(binding) {
                 tvMovieTitle.text = movie.title
                 tvMovieStoryline.text = movie.overview
@@ -66,7 +66,7 @@ class FavoriteMovieListAdapter(
 
     inner class TitleViewHolder(var binding: ItemTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        public fun bind() {
+        fun bind() {
             binding.tvTitle.text =
                 if (movies.size > 1) "Favorite Movies" else "Favorite Movie"
         }
