@@ -10,8 +10,11 @@ import dev.baharudin.themoviedb.data.models.local.Movie
 
 @Database(
     entities = [Genre::class, Movie::class],
-    version = 2,
-    exportSchema = true
+    version = 3,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 2, to = 3)
+    ]
 )
 @TypeConverters(IntArrayListConverter::class)
 abstract class AppDatabase : RoomDatabase() {

@@ -75,7 +75,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     ksp("com.google.dagger:hilt-compiler:$hiltVersion")
 
-    val roomVersion = "2.6.0"
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")

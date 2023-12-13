@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".presentation.home.favorite_movie_list.FavoriteMovieListFragment">
+    tools:context=".presentation.home.genre_list.GenreListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_favorite_movies"
+        android:id="@+id/rv_genres"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="14dp"
         android:clipToPadding="false"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:paddingTop="6dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

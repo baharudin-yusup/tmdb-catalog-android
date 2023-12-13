@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Movie(
     val title: String,
-    val overview: String?,
+    val overview: String,
     val posterPath: String,
     val backdropPath: String,
     val genres: List<Genre>?,

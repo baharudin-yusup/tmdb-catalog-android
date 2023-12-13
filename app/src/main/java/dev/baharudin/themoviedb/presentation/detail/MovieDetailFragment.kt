@@ -76,9 +76,8 @@ class MovieDetailFragment : Fragment() {
             .placeholder(drawable)
             .into(binding.ivMovieThumbnail)
 
-        val releaseDate = movie.releaseDate.toDate(format = "yyyy-MM-dd")
-        releaseDate?.let {
-            binding.tvMovieYear.text = releaseDate.toString(format = "dd MMM yyyy")
+        movie.releaseDate?.toDate(format = "yyyy-MM-dd")?.let {
+            binding.tvMovieYear.text = it.toString(format = "dd MMM yyyy")
         }
 
 

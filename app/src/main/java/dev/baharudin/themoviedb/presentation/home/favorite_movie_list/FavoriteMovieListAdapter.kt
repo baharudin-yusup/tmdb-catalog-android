@@ -1,40 +1,32 @@
-package dev.baharudin.themoviedb.presentation.movie_list
+package dev.baharudin.themoviedb.presentation.home.favorite_movie_list
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import dev.baharudin.themoviedb.databinding.ItemMovieCardBinding
+import dev.baharudin.themoviedb.databinding.ItemTitleBinding
 import dev.baharudin.themoviedb.domain.entities.Genre
 import dev.baharudin.themoviedb.domain.entities.Movie
+import dev.baharudin.themoviedb.presentation.movie_list.MovieGenreListAdapter
 
-class MovieListAdapter(
+class FavoriteMovieListAdapter(
     private val context: Context,
+    private val movies: List<Movie>,
     private val onClick: (Movie) -> Unit,
-) : PagingDataAdapter<Movie, MovieListAdapter.ListViewHolder>(differCallback) {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
-        private val differCallback = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem == newItem
-            }
-        }
+        private const val VIEW_TYPE_TITLE = 0;
+        private const val VIEW_TYPE_ITEM = 1;
     }
 
-    inner class ListViewHolder(private val binding: ItemMovieCardBinding) :
+    inner class MovieListViewHolder(var binding: ItemMovieCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(movie: Movie?) {
-            if (movie == null) return
+        public fun bind(movie: Movie) {
             with(binding) {
                 tvMovieTitle.text = movie.title
                 tvMovieStoryline.text = movie.overview
@@ -72,13 +64,45 @@ class MovieListAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    inner class TitleViewHolder(var binding: ItemTitleBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        public fun bind() {
+            binding.tvTitle.text =
+                if (movies.size > 1) "Favorite Movies" else "Favorite Movie"
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding =
-            ItemMovieCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(binding)
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) VIEW_TYPE_TITLE else VIEW_TYPE_ITEM
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_TITLE -> {
+                val binding =
+                    ItemTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                TitleViewHolder(binding)
+            }
+
+            else -> {
+                val binding =
+                    ItemMovieCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                MovieListViewHolder(binding)
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
+            VIEW_TYPE_TITLE -> {
+                (holder as TitleViewHolder).bind()
+            }
+
+            else -> {
+                (holder as MovieListViewHolder).bind(movies[position - 1])
+            }
+        }
+    }
+
+    override fun getItemCount(): Int = movies.size + 1
 }

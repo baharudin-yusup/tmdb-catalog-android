@@ -1,4 +1,4 @@
-package dev.baharudin.themoviedb.presentation.home
+package dev.baharudin.themoviedb.presentation.home.genre_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

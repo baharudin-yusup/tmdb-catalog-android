@@ -49,7 +49,8 @@ fun MovieResponse.toDbEntity(isFavorite: Boolean = false): DbMovie = DbMovie(
     title = title,
     posterPath = posterPath,
     backdropPath = backdropPath,
-    isFavorite = isFavorite
+    isFavorite = isFavorite,
+    overview = overview
 )
 
 fun Movie.toDbEntity(): DbMovie = DbMovie(
@@ -58,7 +59,8 @@ fun Movie.toDbEntity(): DbMovie = DbMovie(
     title = title,
     posterPath = posterPath,
     backdropPath = backdropPath,
-    isFavorite = isFavorite
+    isFavorite = isFavorite,
+    overview = overview,
 )
 
 fun DbMovie.toEntity(): Movie = Movie(
@@ -67,7 +69,7 @@ fun DbMovie.toEntity(): Movie = Movie(
     id = id,
     originalLanguage = null,
     originalTitle = null,
-    overview = null,
+    overview = overview,
     popularity = null,
     posterPath = posterPath,
     releaseDate = null,
