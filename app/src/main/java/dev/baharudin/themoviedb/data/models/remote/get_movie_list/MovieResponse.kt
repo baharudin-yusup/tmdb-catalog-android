@@ -19,20 +19,4 @@ data class MovieResponse(
     @SerializedName("video") val video: Boolean,
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
-) {
-    fun toEntity(genres: List<Genre>) = Movie(
-        backdropPath = backdropPath,
-        genres = genres,
-        id = id,
-        originalLanguage = originalLanguage,
-        originalTitle = originalTitle,
-        overview = overview,
-        popularity = popularity,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        title = title,
-        video = video,
-        voteAverage = voteAverage,
-        voteCount = voteCount,
-    )
-}
+)

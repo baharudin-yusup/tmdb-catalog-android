@@ -11,6 +11,7 @@ import dev.baharudin.themoviedb.BuildConfig
 import dev.baharudin.themoviedb.data.repositories.MovieRepositoryImpl
 import dev.baharudin.themoviedb.data.sources.local.db.AppDatabase
 import dev.baharudin.themoviedb.data.sources.local.db.GenreDao
+import dev.baharudin.themoviedb.data.sources.local.db.MovieDao
 import dev.baharudin.themoviedb.data.sources.remote.TheMovieDBApi
 import dev.baharudin.themoviedb.domain.repositories.MovieRepository
 import okhttp3.OkHttpClient
@@ -27,9 +28,7 @@ object AppModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "database"
+            context, AppDatabase::class.java, "database"
         ).allowMainThreadQueries().build()
     }
 
@@ -38,10 +37,8 @@ object AppModule {
     fun provideHttpClient(): OkHttpClient {
         val client = OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS).addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .url(chain.request().url)
-                    .addHeader("Authorization", "Bearer " + BuildConfig.API_KEY)
-                    .build()
+                val request = chain.request().newBuilder().url(chain.request().url)
+                    .addHeader("Authorization", "Bearer " + BuildConfig.API_KEY).build()
 
                 chain.proceed(request)
             }
@@ -73,14 +70,20 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideMovieDao(appDatabase: AppDatabase): MovieDao = appDatabase.movieDao()
+
+    @Provides
+    @Singleton
     fun provideTheMovieDBApi(retrofit: Retrofit): TheMovieDBApi =
         retrofit.create(TheMovieDBApi::class.java)
 
     @Provides
     @Singleton
     fun provideMovieRepository(
-        genreDao: GenreDao,
-        theMovieDBApi: TheMovieDBApi
-    ): MovieRepository =
-        MovieRepositoryImpl(genreDao, theMovieDBApi)
+        genreDao: GenreDao, movieDao: MovieDao, theMovieDBApi: TheMovieDBApi
+    ): MovieRepository = MovieRepositoryImpl(
+        genreDao = genreDao,
+        movieDao = movieDao,
+        theMovieDBApi = theMovieDBApi,
+    )
 }
