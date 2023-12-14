@@ -46,19 +46,21 @@ class MovieInfoFragment : Fragment() {
             tvMovieStoryline.text = movie.overview
 
             // Setup genre
-            val totalGenre = movie.genres.size
-            val genres = movie.genres.map { it.name }.reduceIndexed { index, s, acc ->
-                if (index == totalGenre - 1) {
-                    if (totalGenre > 2) {
-                        "$s, & $acc"
+            movie.genres?.let {
+                val totalGenre = it.size
+                val genres = it.map { genre -> genre.name }.reduceIndexed { index, s, acc ->
+                    if (index == totalGenre - 1) {
+                        if (totalGenre > 2) {
+                            "$s, & $acc"
+                        } else {
+                            "$s & $acc"
+                        }
                     } else {
-                        "$s & $acc"
+                        "$s, $acc"
                     }
-                } else {
-                    "$s, $acc"
                 }
+                tvGenreName.text = genres
             }
-            tvGenreName.text = genres
         }
     }
 }

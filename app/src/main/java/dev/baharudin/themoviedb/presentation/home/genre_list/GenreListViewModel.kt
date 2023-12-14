@@ -1,4 +1,4 @@
-package dev.baharudin.themoviedb.presentation.home
+package dev.baharudin.themoviedb.presentation.home.genre_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class GenreListViewModel @Inject constructor(
     private val getMovieGenres: GetMovieGenres,
 ) : ViewModel() {
 

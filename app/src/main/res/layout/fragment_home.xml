@@ -24,47 +24,35 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_genres"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="14dp"
-        android:clipToPadding="false"
-        android:paddingTop="16dp"
-        android:paddingBottom="14dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:minWidth="60dp"
-        android:minHeight="60dp"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/llRetry"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/please_try_again" />
+            android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRetry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_refresh"
-            android:text="@string/retry" />
-    </LinearLayout>
+            <FrameLayout
+                android:id="@+id/container_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <FrameLayout
+                android:id="@+id/container_favorite_movies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/rv_contents"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_marginHorizontal="14dp"-->
+    <!--        android:clipToPadding="false"-->
+    <!--        android:paddingTop="16dp"-->
+    <!--        android:paddingBottom="14dp"-->
+    <!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
