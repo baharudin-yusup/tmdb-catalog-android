@@ -1,9 +1,11 @@
 package dev.baharudin.themoviedb.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -11,7 +13,6 @@ import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baharudin.themoviedb.R
 import dev.baharudin.themoviedb.databinding.FragmentHomeBinding
-import dev.baharudin.themoviedb.presentation.home.favorite_movie_list.FavoriteMovieListFragment
 import dev.baharudin.themoviedb.presentation.home.genre_list.GenreListFragment
 
 @AndroidEntryPoint
@@ -31,10 +32,11 @@ class HomeFragment : Fragment() {
         genreTransaction.replace(binding.containerGenres.id, genreFragment)
         genreTransaction.commit()
 
-        val favoriteMovieFragment = FavoriteMovieListFragment.newInstance()
-        val favoriteMovieTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        favoriteMovieTransaction.replace(binding.containerFavoriteMovies.id, favoriteMovieFragment)
-        favoriteMovieTransaction.commit()
+        // TODO: Add popular movies
+        // val favoriteMovieFragment = FavoriteMovieListFragment.newInstance()
+        // val favoriteMovieTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        // favoriteMovieTransaction.replace(binding.containerFavoriteMovies.id, favoriteMovieFragment)
+        // favoriteMovieTransaction.commit()
 
         return binding.root
     }
@@ -47,7 +49,7 @@ class HomeFragment : Fragment() {
 
     private fun initView() {
         setupAppBar()
-        setupContents()
+        setupFab()
     }
 
     private fun setupAppBar() {
@@ -63,7 +65,18 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupContents() {
-
+    private fun setupFab() {
+        binding.fabFavorite.setOnClickListener {
+            try {
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        Class.forName("dev.baharudin.themoviedb.favorite.presentation.FavoriteActivity")
+                    )
+                )
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Module not found", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

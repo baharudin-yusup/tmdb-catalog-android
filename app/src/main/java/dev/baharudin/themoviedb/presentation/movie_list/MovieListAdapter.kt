@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import dev.baharudin.themoviedb.databinding.ItemMovieCardBinding
-import dev.baharudin.themoviedb.domain.entities.Genre
-import dev.baharudin.themoviedb.domain.entities.Movie
+import dev.baharudin.themoviedb.core.domain.entities.Genre
+import dev.baharudin.themoviedb.core.domain.entities.Movie
 
 class MovieListAdapter(
     private val context: Context,
@@ -41,9 +41,7 @@ class MovieListAdapter(
                 setThumbnail(movie.posterPath, ivMovieThumbnail)
                 root.setOnClickListener { onClick(movie) }
             }
-            movie.genres?.let {
-                setupGenreList(it)
-            }
+            setupGenreList(movie.genres)
         }
 
         private fun setThumbnail(path: String, imageView: ImageView) {

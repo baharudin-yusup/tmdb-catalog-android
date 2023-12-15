@@ -7,8 +7,8 @@ import androidx.paging.cachedIn
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.baharudin.themoviedb.domain.entities.Genre
-import dev.baharudin.themoviedb.domain.usecases.DiscoverMoviesByGenre
+import dev.baharudin.themoviedb.core.domain.entities.Genre
+import dev.baharudin.themoviedb.core.domain.usecases.DiscoverMoviesByGenre
 
 class MovieListViewModel @AssistedInject constructor(
     @Assisted private val genre: Genre,
