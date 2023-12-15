@@ -1,8 +1,6 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object Dependencies {
-    const val classpathSafeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5"
-
     // Navigation
     const val NAVIGATION_FRAGMENT =
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"

@@ -1,6 +1,5 @@
 package dev.baharudin.themoviedb.core.domain.usecases
 
-import dev.baharudin.themoviedb.core.domain.entities.Genre
 import dev.baharudin.themoviedb.core.domain.entities.Movie
 import dev.baharudin.themoviedb.core.domain.entities.Resource
 import dev.baharudin.themoviedb.core.domain.repositories.MovieRepository

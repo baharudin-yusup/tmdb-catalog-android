@@ -3,9 +3,8 @@ package dev.baharudin.themoviedb.favorite.presentation.favorite_movie_list
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.baharudin.themoviedb.core.domain.entities.Resource
 import dev.baharudin.themoviedb.core.domain.entities.Movie
+import dev.baharudin.themoviedb.core.domain.entities.Resource
 import dev.baharudin.themoviedb.core.domain.usecases.GetFavoriteMovies
 import dev.baharudin.themoviedb.presentation.common.DataState
 import kotlinx.coroutines.Dispatchers

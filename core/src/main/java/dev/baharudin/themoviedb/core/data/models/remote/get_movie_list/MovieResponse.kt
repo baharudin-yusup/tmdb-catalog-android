@@ -1,8 +1,6 @@
 package dev.baharudin.themoviedb.core.data.models.remote.get_movie_list
 
 import com.google.gson.annotations.SerializedName
-import dev.baharudin.themoviedb.core.domain.entities.Genre
-import dev.baharudin.themoviedb.core.domain.entities.Movie
 
 data class MovieResponse(
     @SerializedName("adult") val adult: Boolean,
