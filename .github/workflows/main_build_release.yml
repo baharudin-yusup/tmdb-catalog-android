@@ -48,14 +48,7 @@ jobs:
       - name: Create Release Tag
         id: create_tag
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          
           TAG_VERSION="v${{ steps.get_version.outputs.version_name }}"
-          
-          git tag -a $TAG_VERSION -m "Release $TAG_VERSION"
-          git push origin $TAG_VERSION
-
           echo "::set-output name=tag_version::TAG_VERSION"
 
       - name: Decode Keystore
