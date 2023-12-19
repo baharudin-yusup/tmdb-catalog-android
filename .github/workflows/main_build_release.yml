@@ -46,15 +46,17 @@ jobs:
           echo "::set-output name=new_version_code::$NEW_VERSION_CODE"
 
       - name: Create Release Tag
+        id: create_tag
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           
-          TAG_VERSION="v${{env.$VERSION_NAME}}"
-          echo "::set-output name=tag_version::TAG_VERSION"
+          TAG_VERSION="v${{ steps.get_version.outputs.version_name }}"
           
           git tag -a $TAG_VERSION -m "Release $TAG_VERSION"
           git push origin $TAG_VERSION
+
+          echo "::set-output name=tag_version::TAG_VERSION"
 
       - name: Decode Keystore
         env:
@@ -85,8 +87,8 @@ jobs:
       - name: Create Github Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          name: Release ${{ env.TAG_VERSION }}
-          tag_name: ${{ env.TAG_VERSION }}
+          name: Release ${{ steps.create_tag.outputs.tag_version }}
+          tag_name: ${{ steps.create_tag.outputs.tag_version }}
           draft: false
           generate_release_notes: true
           prerelease: false
