@@ -7,8 +7,8 @@ import androidx.paging.cachedIn
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.baharudin.themoviedb.domain.entities.Movie
-import dev.baharudin.themoviedb.domain.usecases.GetMovieReviews
+import dev.baharudin.themoviedb.core.domain.entities.Movie
+import dev.baharudin.themoviedb.core.domain.usecases.GetMovieReviews
 
 class MovieReviewViewModel @AssistedInject constructor(
     @Assisted private val movie: Movie,

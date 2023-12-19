@@ -25,7 +25,7 @@
         tools:layout="@layout/fragment_movie_detail" >
         <argument
             android:name="movie"
-            app:argType="dev.baharudin.themoviedb.domain.entities.Movie" />
+            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_movie_list" >
         <argument
             android:name="genre"
-            app:argType="dev.baharudin.themoviedb.domain.entities.Genre" />
+            app:argType="dev.baharudin.themoviedb.core.domain.entities.Genre" />
         <action
             android:id="@+id/action_movieListFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -50,7 +50,7 @@
         android:label="MovieReviewFragment" >
         <argument
             android:name="movie"
-            app:argType="dev.baharudin.themoviedb.domain.entities.Movie" />
+            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
     </fragment>
     <fragment
         android:id="@+id/movieInfoFragment"
@@ -59,15 +59,6 @@
         tools:layout="@layout/fragment_movie_info" >
         <argument
             android:name="movie"
-            app:argType="dev.baharudin.themoviedb.domain.entities.Movie" />
-    </fragment>
-    <fragment
-        android:id="@+id/favoriteMovieListFragment"
-        android:name="dev.baharudin.themoviedb.presentation.home.favorite_movie_list.FavoriteMovieListFragment"
-        android:label="fragment_favorite_movie_list"
-        tools:layout="@layout/fragment_favorite_movie_list" >
-        <action
-            android:id="@+id/action_favoriteMovieListFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
     </fragment>
 </navigation>

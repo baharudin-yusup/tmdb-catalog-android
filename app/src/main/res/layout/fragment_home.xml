@@ -40,19 +40,19 @@
                 android:layout_height="wrap_content" />
 
             <FrameLayout
-                android:id="@+id/container_favorite_movies"
+                android:id="@+id/container_popular_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/rv_contents"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_marginHorizontal="14dp"-->
-    <!--        android:clipToPadding="false"-->
-    <!--        android:paddingTop="16dp"-->
-    <!--        android:paddingBottom="14dp"-->
-    <!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/favorite"
+        android:layout_gravity="bottom|end"
+        app:srcCompat="@android:drawable/ic_menu_save" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

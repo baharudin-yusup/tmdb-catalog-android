@@ -9,11 +9,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.baharudin.themoviedb.common.Resource
-import dev.baharudin.themoviedb.domain.entities.Movie
-import dev.baharudin.themoviedb.domain.usecases.AddToFavoriteMovie
-import dev.baharudin.themoviedb.domain.usecases.GetMovieDetail
-import dev.baharudin.themoviedb.domain.usecases.RemoveFromFavoriteMovie
+import dev.baharudin.themoviedb.core.domain.entities.Resource
+import dev.baharudin.themoviedb.core.domain.entities.Movie
+import dev.baharudin.themoviedb.core.domain.usecases.AddToFavoriteMovie
+import dev.baharudin.themoviedb.core.domain.usecases.GetMovieDetail
+import dev.baharudin.themoviedb.core.domain.usecases.RemoveFromFavoriteMovie
 import dev.baharudin.themoviedb.presentation.common.DataState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

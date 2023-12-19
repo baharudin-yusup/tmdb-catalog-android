@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.baharudin.themoviedb.databinding.ItemGenreCardBinding
-import dev.baharudin.themoviedb.domain.entities.Genre
+import dev.baharudin.themoviedb.core.domain.entities.Genre
 
 class
 

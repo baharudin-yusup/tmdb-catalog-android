@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import dev.baharudin.themoviedb.databinding.ItemReviewCardBinding
-import dev.baharudin.themoviedb.domain.entities.Review
+import dev.baharudin.themoviedb.core.domain.entities.Review
 import dev.baharudin.themoviedb.presentation.common.toDate
 import dev.baharudin.themoviedb.presentation.common.toImageUrl
 import dev.baharudin.themoviedb.presentation.common.toString

@@ -2,7 +2,7 @@ package dev.baharudin.themoviedb.presentation.detail
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import dev.baharudin.themoviedb.domain.entities.Movie
+import dev.baharudin.themoviedb.core.domain.entities.Movie
 import dev.baharudin.themoviedb.presentation.detail.movie_info.MovieInfoFragment
 import dev.baharudin.themoviedb.presentation.detail.movie_review.MovieReviewFragment
 

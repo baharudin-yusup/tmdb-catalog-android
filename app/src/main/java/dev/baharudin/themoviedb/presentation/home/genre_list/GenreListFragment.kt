@@ -13,7 +13,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baharudin.themoviedb.databinding.FragmentGenreListBinding
-import dev.baharudin.themoviedb.domain.entities.Genre
+import dev.baharudin.themoviedb.core.domain.entities.Genre
 import dev.baharudin.themoviedb.presentation.home.HomeFragmentDirections
 
 @AndroidEntryPoint

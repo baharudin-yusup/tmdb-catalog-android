@@ -25,4 +25,8 @@
     <string name="overview">Overview</string>
     <string name="genre">Genre</string>
     <string name="information">Information</string>
+    <string name="title_favorite_movie">Favorite Movie</string>
+    <string name="title_favorite">Favorite Movies</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="favorite">Favorite</string>
 </resources>
