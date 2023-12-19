@@ -66,6 +66,7 @@ jobs:
           GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
           GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+          GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
         run: ./gradlew assembleRelease
 
       - name: Build Release Bundle
@@ -75,6 +76,7 @@ jobs:
           GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
           GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+          GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
         run: ./gradlew bundleRelease
 
       - name: Create Github Release

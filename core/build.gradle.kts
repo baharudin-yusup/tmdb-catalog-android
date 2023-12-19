@@ -33,10 +33,16 @@ android {
                 "proguard-rules.pro"
             )
 
-            val accessToken: String =
-                gradleLocalProperties(rootDir).getProperty("PROD_ACCESS_TOKEN")
-            buildConfigField("String", "API_KEY", "\"$accessToken\"")
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            if (System.getenv("GH_ACTIONS_FLAG").toBoolean()) {
+                val accessToken = System.getenv("GH_ACTIONS_PROD_ACCESS_TOKEN")
+                buildConfigField("String", "API_KEY", "\"$accessToken\"")
+                buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            } else {
+                val accessToken: String =
+                    gradleLocalProperties(rootDir).getProperty("PROD_ACCESS_TOKEN")
+                buildConfigField("String", "API_KEY", "\"$accessToken\"")
+                buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            }
         }
     }
     compileOptions {
