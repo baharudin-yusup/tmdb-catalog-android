@@ -22,6 +22,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            if (System.getenv("GH_ACTIONS_FLAG").toBoolean()) {
+                storeFile = file("GH_ACTIONS_SIGNING_STORE_FILE_PATH")
+                storePassword = System.getenv("GH_ACTIONS_SIGNING_STORE_PASSWORD")
+                keyAlias = System.getenv("GH_ACTIONS_SIGNING_KEY_ALIAS")
+                keyPassword = System.getenv("GH_ACTIONS_SIGNING_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false

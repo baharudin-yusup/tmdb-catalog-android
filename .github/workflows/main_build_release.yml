@@ -1,0 +1,115 @@
+name: Release APK and Tag with Version Update (Main Branch)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Cache Gradle and wrapper
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Make Gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Get current versionCode and versionName
+        id: get_version
+        run: |
+          VERSION_CODE=$(grep 'versionCode' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
+          VERSION_NAME=$(grep 'versionName' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
+          echo "::set-output name=version_code::$VERSION_CODE"
+          echo "::set-output name=version_name::$VERSION_NAME"
+
+      - name: Increment VersionCode
+        id: increment_version
+        run: |
+          NEW_VERSION_CODE=$((${{ steps.get_version.outputs.version_code }} + 1))
+          sed -i "s/versionCode ${{ steps.get_version.outputs.version_code }}/versionCode $NEW_VERSION_CODE/" app/build.gradle.kts
+          echo "::set-output name=new_version_code::$NEW_VERSION_CODE"
+
+      - name: Create Release Tag
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          
+          CURRENT_VERSION_NAME=$(grep 'versionName' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
+          val parts = CURRENT_VERSION_NAME.split(".")
+          TAG_VERSION="v${parts[0]}.${parts[1]}.${parts[2]}"
+          
+          git tag -a $TAG_VERSION -m "Release $TAG_VERSION"
+          git push origin $TAG_VERSION
+
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.GH_ACTIONS_SIGNING_STORE_BASE64 }}
+          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
+        run: |
+           echo $ENCODED_STRING > keystore-b64.txt
+           base64 -d keystore-b64.txt > $GH_ACTIONS_SIGNING_STORE_FILE_PATH
+
+      - name: Build Release APK
+        env:
+          GH_ACTIONS_FLAG: ${{ secrets.GH_ACTIONS_FLAG }}
+          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
+          GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
+          GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
+          GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
+
+      - name: Build Release Bundle
+        env:
+          GH_ACTIONS_FLAG: ${{ secrets.GH_ACTIONS_FLAG }}
+          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
+          GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
+          GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
+          GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+        run: ./gradlew bundleRelease
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: ${{ env.TAG_VERSION }}
+          release_name: Release ${{ env.TAG_VERSION }}
+          body: Release ${{ env.TAG_VERSION }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload APK to GitHub Release
+        if: steps.create_release.outputs.upload_url != ''
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/apk/release/app-release.apk
+          asset_name: app-release.apk
+          asset_content_type: application/zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Bundle to GitHub Release
+        if: steps.create_release.outputs.upload_url != ''
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/bundle/release/app-release.aab
+          asset_name: app-release.aab
+          asset_content_type: application/octet-stream
+          token: ${{ secrets.GITHUB_TOKEN }}
