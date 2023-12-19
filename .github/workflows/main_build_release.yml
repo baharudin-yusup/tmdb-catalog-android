@@ -46,15 +46,15 @@ jobs:
           echo "::set-output name=new_version_code::$NEW_VERSION_CODE"
 
       - name: Create Release Tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{env.VERSION_NAME}}',
-              sha: context.sha
-            })
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          
+          TAG_VERSION="v${{env.$VERSION_NAME}}"
+          echo "::set-output name=tag_version::TAG_VERSION"
+          
+          git tag -a $TAG_VERSION -m "Release $TAG_VERSION"
+          git push origin $TAG_VERSION
 
       - name: Decode Keystore
         env:
