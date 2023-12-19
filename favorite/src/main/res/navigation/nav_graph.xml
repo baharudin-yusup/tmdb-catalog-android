@@ -6,20 +6,9 @@
     app:startDestination="@id/favoriteMovieListFragment">
 
     <fragment
-        android:id="@+id/movieDetailFragment"
-        android:name="dev.baharudin.themoviedb.presentation.detail.MovieDetailFragment"
-        android:label="MovieDetailFragment">
-        <argument
-            android:name="movie"
-            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
-    </fragment>
-    <fragment
         android:id="@+id/favoriteMovieListFragment"
         android:name="dev.baharudin.themoviedb.favorite.presentation.favorite_movie_list.FavoriteMovieListFragment"
         android:label="fragment_favorite_movie_list"
         tools:layout="@layout/fragment_favorite_movie_list">
-        <action
-            android:id="@+id/action_favoriteMovieListFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
     </fragment>
 </navigation>

@@ -1,5 +1,6 @@
 package dev.baharudin.themoviedb.favorite.presentation.favorite_movie_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.EntryPointAccessors
+import dev.baharudin.themoviedb.core.domain.entities.Movie
 import dev.baharudin.themoviedb.di.FavoriteModuleDependencies
 import dev.baharudin.themoviedb.favorite.databinding.FragmentFavoriteMovieListBinding
 import dev.baharudin.themoviedb.favorite.di.DaggerFavoriteComponent
+import dev.baharudin.themoviedb.presentation.MainActivity
+import dev.baharudin.themoviedb.presentation.detail.MovieDetailFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +32,10 @@ class FavoriteMovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         DaggerFavoriteComponent.factory().create(
-            EntryPointAccessors.fromApplication(requireContext(), FavoriteModuleDependencies::class.java)
+            EntryPointAccessors.fromApplication(
+                requireContext(),
+                FavoriteModuleDependencies::class.java
+            )
         ).inject(this)
 
         binding = FragmentFavoriteMovieListBinding.inflate(inflater, container, false)
@@ -58,14 +64,10 @@ class FavoriteMovieListFragment : Fragment() {
                         else -> {
                             dataState.data?.let { movies ->
                                 favoriteMovieListAdapter =
-                                    FavoriteMovieListAdapter(requireContext(), movies) {
-                                        val toDetailActivity =
-                                            FavoriteMovieListFragmentDirections.actionFavoriteMovieListFragmentToMovieDetailFragment(
-                                                it
-                                            )
-                                        view?.findNavController()
-                                            ?.navigate(toDetailActivity)
-                                    }
+                                    FavoriteMovieListAdapter(
+                                        requireContext(),
+                                        movies
+                                    ) { openMovieDetail(it) }
 
                                 binding.rvFavoriteMovies.setHasFixedSize(true)
                                 binding.rvFavoriteMovies.layoutManager =
@@ -78,5 +80,15 @@ class FavoriteMovieListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun openMovieDetail(movie: Movie) {
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.putExtra(
+            MainActivity.EXTRA_FRAGMENT_DESTINATION,
+            MovieDetailFragment::class.java.simpleName
+        )
+        intent.putExtra(MainActivity.EXTRA_PARCELABLE, movie)
+        startActivity(intent)
     }
 }
