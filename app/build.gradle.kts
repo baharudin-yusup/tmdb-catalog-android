@@ -53,6 +53,15 @@ android {
         viewBinding = true
     }
     dynamicFeatures += setOf(":favorite")
+
+//    applicationVariants.all {
+//        val versionName = this.mergedFlavor.versionName
+//        tasks.register("printVersionName") {
+//            doLast {
+//                println(versionName)
+//            }
+//        }
+//    }
 }
 
 dependencies {

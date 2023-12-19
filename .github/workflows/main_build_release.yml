@@ -46,16 +46,15 @@ jobs:
           echo "::set-output name=new_version_code::$NEW_VERSION_CODE"
 
       - name: Create Release Tag
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          
-          CURRENT_VERSION_NAME=$(grep 'versionName' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
-          val parts = CURRENT_VERSION_NAME.split(".")
-          TAG_VERSION="v${parts[0]}.${parts[1]}.${parts[2]}"
-          
-          git tag -a $TAG_VERSION -m "Release $TAG_VERSION"
-          git push origin $TAG_VERSION
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{env.VERSION_NAME}}',
+              sha: context.sha
+            })
 
       - name: Decode Keystore
         env:
