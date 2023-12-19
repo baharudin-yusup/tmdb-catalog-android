@@ -21,10 +21,16 @@ android {
 
     buildTypes {
         debug {
-            val accessToken: String =
-                gradleLocalProperties(rootDir).getProperty("DEV_ACCESS_TOKEN")
-            buildConfigField("String", "API_KEY", "\"$accessToken\"")
-            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            if (System.getenv("GH_ACTIONS_FLAG").toBoolean()) {
+                val accessToken = System.getenv("GH_ACTIONS_DEV_ACCESS_TOKEN")
+                buildConfigField("String", "API_KEY", "\"$accessToken\"")
+                buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            } else {
+                val accessToken: String =
+                    gradleLocalProperties(rootDir).getProperty("DEV_ACCESS_TOKEN")
+                buildConfigField("String", "API_KEY", "\"$accessToken\"")
+                buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
+            }
         }
         release {
             isMinifyEnabled = false
