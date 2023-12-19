@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.baharudin.themoviedb.databinding.ItemMovieGenreCardBinding
-import dev.baharudin.themoviedb.domain.entities.Genre
+import dev.baharudin.themoviedb.core.domain.entities.Genre
 
 class MovieGenreListAdapter(private val genres: List<Genre>): RecyclerView.Adapter<MovieGenreListAdapter.ListViewHolder>() {
     class ListViewHolder(private var binding: ItemMovieGenreCardBinding): RecyclerView.ViewHolder(binding.root) {

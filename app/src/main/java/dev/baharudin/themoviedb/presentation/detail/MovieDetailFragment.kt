@@ -24,6 +24,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
+    companion object {
+        const val EXTRA_MOVIE = "movie"
+    }
+
     private lateinit var binding: FragmentMovieDetailBinding
     private val args: MovieDetailFragmentArgs by navArgs()
 
