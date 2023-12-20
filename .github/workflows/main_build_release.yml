@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: release-artifacts
-          paths: |
+          path: |
             app/build/outputs/apk/release/*.apk
             app/build/outputs/bundle/release/*.aab
 
@@ -76,6 +76,9 @@ jobs:
             app/build/outputs/bundle/release/
           pattern: app-*
           merge-multiple: true
+
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
 
       - name : Retrieve Version
         id: retrieve_version
