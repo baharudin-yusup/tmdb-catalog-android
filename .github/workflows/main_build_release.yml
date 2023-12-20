@@ -56,22 +56,37 @@ jobs:
           GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
         run: ./gradlew app:bundleRelease
 
+      - name: Upload Release Build to Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-artifacts
+          paths: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/bundle/release/*.aab
+
   release:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Get Current versionCode and versionName
-        id: get_version
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: |
+            app/build/outputs/apk/release/
+            app/build/outputs/bundle/release/
+          pattern: app-*
+          merge-multiple: true
+
+      - name : Retrieve Version
+        id: retrieve_version
         run: |
-          VERSION_CODE=$(grep 'versionCode' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
-          VERSION_NAME=$(grep 'versionName' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
-          echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
+          VERSION_NAME=$(${{github.workspace}}/gradlew -q printVersionNameRelease)
           echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
 
       - name: Create Release Tag
         id: create_tag
         run: |
-          TAG_VERSION="v${{ steps.get_version.outputs.version_name }}"
+          TAG_VERSION="v${{ steps.retrieve_version.outputs.version_name }}"
           echo "tag_version=$TAG_VERSION" >> $GITHUB_OUTPUT
 
       - name: Create Github Release

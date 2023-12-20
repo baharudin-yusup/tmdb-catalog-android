@@ -1,4 +1,5 @@
 import java.io.FileInputStream
+import java.util.Locale
 import java.util.Properties
 
 plugins {
@@ -74,6 +75,28 @@ android {
         viewBinding = true
     }
     dynamicFeatures += setOf(":favorite")
+
+    applicationVariants.all {
+        val variant = this
+        val variantName = variant.name
+        val variantVersionName = variant.versionName ?: "Not found"
+
+        tasks.register(
+            "printVersionName${
+                variantName.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                }
+            }"
+        ) {
+            group = "Custom tasks"
+            description = "Prints versionName for $variantName build type"
+            doLast {
+                println(variantVersionName)
+            }
+        }
+    }
 }
 
 dependencies {
