@@ -46,14 +46,13 @@ jobs:
           fileName: 'keystore.jks'
           encodedString: ${{ secrets.GH_ACTIONS_SIGNING_STORE_BASE64 }}
 
+      - name: Set Keystore Location
+        run: echo "GH_ACTIONS_SIGNING_STORE_FILE_PATH=${{ steps.decode_keystore.outputs.filePath }}" >> $GITHUB_ENV
+
       - name: Build Release APK
-        env:
-          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
         run: ./gradlew app:assembleRelease
 
       - name: Build Release Bundle
-        env:
-          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
         run: ./gradlew app:bundleRelease
 
       - name: Upload Release Build to Artifacts
@@ -64,7 +63,7 @@ jobs:
             app/build/outputs/apk/release/*.apk
             app/build/outputs/bundle/release/*.aab
 
-      - name : Retrieve Version
+      - name : Retrieve Release Version
         id: retrieve_version
         run: |
           VERSION_NAME=$(${{github.workspace}}/gradlew -q printVersionNameRelease)
