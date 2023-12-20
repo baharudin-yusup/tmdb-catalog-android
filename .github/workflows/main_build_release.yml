@@ -11,7 +11,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     env:
       GH_ACTIONS_FLAG: true
       GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
@@ -19,7 +18,6 @@ jobs:
       GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
       GH_ACTIONS_DEV_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_DEV_ACCESS_TOKEN }}
       GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4.1.1
@@ -59,8 +57,8 @@ jobs:
         run: ./gradlew app:bundleRelease
 
   release:
+    needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Get Current versionCode and versionName
         id: get_version
