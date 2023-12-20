@@ -66,7 +66,15 @@ jobs:
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
           GH_ACTIONS_DEV_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_DEV_ACCESS_TOKEN }}
           GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
-        run: GH_ACTIONS_FLAG=true ./gradlew app:assembleRelease
+        run: |
+          export GH_ACTIONS_FLAG=true
+          export GH_ACTIONS_SIGNING_STORE_FILE_PATH="${GH_ACTIONS_SIGNING_STORE_FILE_PATH}"
+          export GH_ACTIONS_SIGNING_STORE_PASSWORD="${GH_ACTIONS_SIGNING_STORE_PASSWORD}"
+          export GH_ACTIONS_SIGNING_KEY_ALIAS="${GH_ACTIONS_SIGNING_KEY_ALIAS}"
+          export GH_ACTIONS_SIGNING_KEY_PASSWORD="${GH_ACTIONS_SIGNING_KEY_PASSWORD}"
+          export GH_ACTIONS_DEV_ACCESS_TOKEN="${GH_ACTIONS_DEV_ACCESS_TOKEN}"
+          export GH_ACTIONS_PROD_ACCESS_TOKEN="${GH_ACTIONS_PROD_ACCESS_TOKEN}"
+          ./gradlew app:assembleRelease
 
       - name: Build Release Bundle
         env:
@@ -76,7 +84,15 @@ jobs:
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
           GH_ACTIONS_DEV_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_DEV_ACCESS_TOKEN }}
           GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
-        run: GH_ACTIONS_FLAG=true ./gradlew app:bundleRelease
+        run: |
+          export GH_ACTIONS_FLAG=true
+          export GH_ACTIONS_SIGNING_STORE_FILE_PATH="${GH_ACTIONS_SIGNING_STORE_FILE_PATH}"
+          export GH_ACTIONS_SIGNING_STORE_PASSWORD="${GH_ACTIONS_SIGNING_STORE_PASSWORD}"
+          export GH_ACTIONS_SIGNING_KEY_ALIAS="${GH_ACTIONS_SIGNING_KEY_ALIAS}"
+          export GH_ACTIONS_SIGNING_KEY_PASSWORD="${GH_ACTIONS_SIGNING_KEY_PASSWORD}"
+          export GH_ACTIONS_DEV_ACCESS_TOKEN="${GH_ACTIONS_DEV_ACCESS_TOKEN}"
+          export GH_ACTIONS_PROD_ACCESS_TOKEN="${GH_ACTIONS_PROD_ACCESS_TOKEN}"
+          ./gradlew app:bundleRelease
 
       - name: Create Github Release
         uses: softprops/action-gh-release@v0.1.15
