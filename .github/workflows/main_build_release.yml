@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  release_build:
     runs-on: ubuntu-latest
     env:
       GH_ACTIONS_FLAG: true
@@ -63,22 +63,6 @@ jobs:
           path: |
             app/build/outputs/apk/release/*.apk
             app/build/outputs/bundle/release/*.aab
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: |
-            app/build/outputs/apk/release/
-            app/build/outputs/bundle/release/
-          pattern: app-*
-          merge-multiple: true
-
-      - name: Make Gradlew Executable
-        run: chmod +x ./gradlew
 
       - name : Retrieve Version
         id: retrieve_version
