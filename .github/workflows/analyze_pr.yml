@@ -1,18 +1,22 @@
 name: Analyze Pull Request
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-
-permissions:
-  contents: write
+      - dev
 
 jobs:
-  release_build:
+  analyze:
+    name: Build and Test
     runs-on: ubuntu-latest
     env:
       GH_ACTIONS_FLAG: true
+      GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
+      GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
+      GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+      GH_ACTIONS_DEV_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_DEV_ACCESS_TOKEN }}
+      GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4.1.1
@@ -34,8 +38,18 @@ jobs:
       - name: Make Gradlew Executable
         run: chmod +x ./gradlew
 
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1.2.4
+        with:
+          fileName: 'keystore.jks'
+          encodedString: ${{ secrets.GH_ACTIONS_SIGNING_STORE_BASE64 }}
+
+      - name: Set Keystore Location
+        run: echo "GH_ACTIONS_SIGNING_STORE_FILE_PATH=${{ steps.decode_keystore.outputs.filePath }}" >> $GITHUB_ENV
+
       - name: Build and Test
-        run: ./gradlew test
+        run: ./gradlew testReleaseUnitTest
 
       - name: Run lint
         run: ./gradlew lintRelease
