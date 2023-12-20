@@ -1,0 +1,41 @@
+name: Analyze Pull Request
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release_build:
+    runs-on: ubuntu-latest
+    env:
+      GH_ACTIONS_FLAG: true
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v4.0.0
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      - name: Cache Gradle and Wrapper
+        uses: actions/cache@v3.3.2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
+
+      - name: Build and Test
+        run: ./gradlew test
+
+      - name: Run lint
+        run: ./gradlew lintRelease
