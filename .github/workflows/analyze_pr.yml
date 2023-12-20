@@ -1,15 +1,14 @@
 name: Analyze Pull Request
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-
-permissions:
-  contents: write
+      - dev
 
 jobs:
-  release_build:
+  analyze:
+    name: Build and Test
     runs-on: ubuntu-latest
     env:
       GH_ACTIONS_FLAG: true
@@ -50,7 +49,7 @@ jobs:
         run: echo "GH_ACTIONS_SIGNING_STORE_FILE_PATH=${{ steps.decode_keystore.outputs.filePath }}" >> $GITHUB_ENV
 
       - name: Build and Test
-        run: ./gradlew test
+        run: ./gradlew testReleaseUnitTest
 
       - name: Run lint
         run: ./gradlew lintRelease

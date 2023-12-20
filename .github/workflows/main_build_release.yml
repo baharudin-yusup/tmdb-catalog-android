@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   release_build:
+    name: Build and Release APK and Appbundle
     runs-on: ubuntu-latest
     env:
       GH_ACTIONS_FLAG: true
