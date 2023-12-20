@@ -52,16 +52,15 @@ jobs:
           echo "::set-output name=tag_version::TAG_VERSION"
 
       - name: Decode Keystore
-        env:
-          ENCODED_STRING: ${{ secrets.GH_ACTIONS_SIGNING_STORE_BASE64 }}
-          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
-        run: |
-           echo $ENCODED_STRING > keystore-b64.txt
-           base64 -d keystore-b64.txt > $GH_ACTIONS_SIGNING_STORE_FILE_PATH
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1.2.4
+        with:
+          fileName: 'keystore.jks'
+          encodedString: ${{ secrets.GH_ACTIONS_SIGNING_STORE_BASE64 }}
 
       - name: Build Release APK
         env:
-          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
+          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
           GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
           GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
@@ -71,7 +70,7 @@ jobs:
 
       - name: Build Release Bundle
         env:
-          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
+          GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ steps.decode_keystore.outputs.filePath }}
           GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
           GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
