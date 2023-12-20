@@ -1,4 +1,4 @@
-name: Release APK and Tag with Version Update (Main Branch)
+name: Build Release App
 
 on:
   push:
@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4.1.1
 
-      - name: Set up JDK
+      - name: Set Up JDK
         uses: actions/setup-java@v4.0.0
         with:
           distribution: 'corretto'
           java-version: '17'
 
-      - name: Cache Gradle and wrapper
+      - name: Cache Gradle and Wrapper
         uses: actions/cache@v3.3.2
         with:
           path: |
@@ -27,10 +27,10 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
 
-      - name: Make Gradlew executable
+      - name: Make Gradlew Executable
         run: chmod +x ./gradlew
 
-      - name: Get current versionCode and versionName
+      - name: Get Current versionCode and versionName
         id: get_version
         run: |
           VERSION_CODE=$(grep 'versionCode' app/build.gradle.kts | awk '{print $3}' | tr -d "'")
@@ -38,7 +38,7 @@ jobs:
           echo "::set-output name=version_code::$VERSION_CODE"
           echo "::set-output name=version_name::$VERSION_NAME"
 
-      - name: Increment VersionCode
+      - name: Increment versionCode
         id: increment_version
         run: |
           NEW_VERSION_CODE=$((${{ steps.get_version.outputs.version_code }} + 1))
@@ -66,16 +66,18 @@ jobs:
           GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
           GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+          GH_ACTIONS_DEV_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_DEV_ACCESS_TOKEN }}
           GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
         run: ./gradlew assembleRelease
 
       - name: Build Release Bundle
         env:
-          GH_ACTIONS_FLAG: ${{ secrets.GH_ACTIONS_FLAG }}
+          GH_ACTIONS_FLAG: ${{ env.GH_ACTIONS_FLAG }}
           GH_ACTIONS_SIGNING_STORE_FILE_PATH: ${{ secrets.GH_ACTIONS_SIGNING_STORE_FILE_PATH }}
           GH_ACTIONS_SIGNING_STORE_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_STORE_PASSWORD }}
           GH_ACTIONS_SIGNING_KEY_ALIAS: ${{ secrets.GH_ACTIONS_SIGNING_KEY_ALIAS }}
           GH_ACTIONS_SIGNING_KEY_PASSWORD: ${{ secrets.GH_ACTIONS_SIGNING_KEY_PASSWORD }}
+          GH_ACTIONS_DEV_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_DEV_ACCESS_TOKEN }}
           GH_ACTIONS_PROD_ACCESS_TOKEN: ${{ secrets.GH_ACTIONS_PROD_ACCESS_TOKEN }}
         run: ./gradlew bundleRelease
 

@@ -21,16 +21,10 @@ android {
 
     buildTypes {
         debug {
-            if (System.getenv("GH_ACTIONS_FLAG").toBoolean()) {
-                val accessToken = System.getenv("GH_ACTIONS_DEV_ACCESS_TOKEN")
-                buildConfigField("String", "API_KEY", "\"$accessToken\"")
-                buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
-            } else {
-                val accessToken: String =
-                    gradleLocalProperties(rootDir).getProperty("DEV_ACCESS_TOKEN")
-                buildConfigField("String", "API_KEY", "\"$accessToken\"")
-                buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
-            }
+            val accessToken: String =
+                gradleLocalProperties(rootDir).getProperty("DEV_ACCESS_TOKEN")
+            buildConfigField("String", "API_KEY", "\"$accessToken\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.themoviedb.org/\"")
         }
         release {
             isMinifyEnabled = false
@@ -51,13 +45,16 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
     buildFeatures {
         buildConfig = true
     }
