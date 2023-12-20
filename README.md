@@ -1,6 +1,6 @@
 # The Movie DB Android App
 
-[![Build Status](https://github.com/baharudin-yusup/the-movie-db-android/actions/workflows/main_build_release.yml/badge.svg)](https://github.com/baharudin-yusup/the-movie-db-android/actions/workflows/main_build_release.yml)
+[![Build Status](https://github.com/baharudin-yusup/the-movie-db-android/actions/workflows/main_build_release.yml/badge.svg?branch=main)](https://github.com/baharudin-yusup/the-movie-db-android/actions/workflows/main_build_release.yml)
 
 This Android application, developed in Kotlin, showcases movies and TV shows using TheMovieDB API.
 
