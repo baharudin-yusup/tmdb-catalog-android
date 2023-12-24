@@ -14,6 +14,7 @@ import dev.baharudin.themoviedb.databinding.ItemMovieCardBinding
 import dev.baharudin.themoviedb.databinding.ItemTitleBinding
 import dev.baharudin.themoviedb.presentation.movie_list.MovieGenreListAdapter
 
+// TODO: Edit this
 class FavoriteMovieListAdapter(
     private val context: Context,
     private val movies: List<Movie>,
@@ -65,8 +66,8 @@ class FavoriteMovieListAdapter(
     inner class TitleViewHolder(private var binding: ItemTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-            binding.tvTitle.text =
-                if (movies.size > 1) "Favorite Movies" else "Favorite Movie"
+            binding.tvTitle.text = ""
+//                if (movies.size > 1) "Favorite Movies" else "Favorite Movie"
         }
     }
 
@@ -93,8 +94,7 @@ class FavoriteMovieListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             VIEW_TYPE_TITLE -> {
-                // TODO: Add title if needed
-                // (holder as TitleViewHolder).bind()
+                (holder as TitleViewHolder).bind()
             }
 
             else -> {
