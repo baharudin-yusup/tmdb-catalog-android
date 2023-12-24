@@ -54,7 +54,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -109,6 +109,9 @@ dependencies {
     applyLifecycleDependencies()
     applyHiltDependencies()
     applyPagingDependencies()
-    applyRoomDependencies()
+    applyLocalDbDependencies()
     applyGlideDependencies()
+
+    // Specific dependencies
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }

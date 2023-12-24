@@ -29,7 +29,7 @@ android {
             }
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -64,8 +64,9 @@ dependencies {
     applyBasicFunctionDependencies()
     applyPagingDependencies()
     applyNetworkDependencies()
+    applyLocalDbDependencies()
     applyHiltDependencies()
-    applyRoomDependencies()
+
 }
 
 ksp {
