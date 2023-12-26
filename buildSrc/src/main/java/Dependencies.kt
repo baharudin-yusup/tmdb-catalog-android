@@ -43,13 +43,16 @@ object Dependencies {
     const val ROOM_TESTING = "androidx.room:room-testing:${Versions.ROOM}"
 
     // Room Encrypt
-    const val ANDROID_DATABASE_SQLCIPHER = "net.zetetic:android-database-sqlcipher:4.4.0"
+    const val ANDROID_DATABASE_SQLCIPHER = "net.zetetic:android-database-sqlcipher:4.4.0@aar"
     const val SQLITE = "androidx.sqlite:sqlite-ktx:2.4.0"
 
     // Glide
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val GLIDE_KSP = "com.github.bumptech.glide:ksp:${Versions.GLIDE}"
+
+    // Test
+    const val JUNIT_JUPITER = "org.junit.jupiter:junit-jupiter:5.8.1"
 }
 
 private fun DependencyHandler.implementation(dependency: Any) {
@@ -126,6 +129,7 @@ fun DependencyHandler.applyGlideDependencies() {
 fun DependencyHandler.applyBasicFunctionDependencies() {
     implementation("androidx.core:core-ktx:1.12.0")
     testImplementation("junit:junit:4.13.2")
+    testImplementation(Dependencies.JUNIT_JUPITER)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
