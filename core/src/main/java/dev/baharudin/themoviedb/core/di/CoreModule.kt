@@ -49,6 +49,18 @@ object CoreModule {
             client.addInterceptor(httpLoggingInterceptor)
         }
 
+        // Add certificate
+        // TODO: Add prod and dev certificate
+        val hostname = BuildConfig.BASE_URL.substring(8, BuildConfig.BASE_URL.length - 1)
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/5VLcahb6x4EvvFrCF2TePZulWqrLHS2jCg9Ywv6JHog=")
+            .add(hostname, "sha256/vxRon/El5KuI4vx5ey1DgmsYmRY0nDd5Cg4GfJ8S+bg=")
+            .add(hostname, "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI=")
+            .add(hostname, "sha256/KwccWaCgrnaw6tsrrSO61FgLacNgG2MMLq8GE6+oP5I=")
+            .build()
+        client.certificatePinner(certificatePinner)
+
+        // Build the client
         return client.build()
     }
 
