@@ -32,6 +32,7 @@
 ##---------------End: proguard configuration for Gson  ----------
 
 
+##---------------Begin: proguard configuration for Retrofit  ----------
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
 -keepattributes Signature, InnerClasses, EnclosingMethod
@@ -87,3 +88,18 @@
 # Keep Kotlin metadata for Kotlin Parcelable classes
 -keepnames class dev.baharudin.themoviedb.core.domain.entities.** { *; }
 -keep class dev.baharudin.themoviedb.core.domain.entities.**$$Parcelable { *; }
+
+
+
+##---------------Begin: proguard configuration for Room  ----------
+-keep,includedescriptorclasses class net.sqlcipher.** { *; }
+-keep,includedescriptorclasses interface net.sqlcipher.** { *; }
+-keep class net.sqlcipher.** { *; }
+-keep class org.w3c.** { *; }
+-keep class androidx.sqlite.db.** { *; }
+-keep class androidx.sqlite.** { *; }
+-keepclassmembers class * {
+    @androidx.room.* <methods>;
+    @androidx.room.* <fields>;
+}
+##---------------End: proguard configuration for Room  ----------

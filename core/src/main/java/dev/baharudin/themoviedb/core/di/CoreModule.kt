@@ -1,7 +1,6 @@
 package dev.baharudin.themoviedb.core.di
 
 import android.content.Context
-import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,11 +8,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.baharudin.themoviedb.core.BuildConfig
 import dev.baharudin.themoviedb.core.data.repositories.MovieRepositoryImpl
-import dev.baharudin.themoviedb.core.data.sources.local.db.AppDatabase
+import dev.baharudin.themoviedb.core.data.sources.local.db.CoreDatabase
 import dev.baharudin.themoviedb.core.data.sources.local.db.GenreDao
 import dev.baharudin.themoviedb.core.data.sources.local.db.MovieDao
 import dev.baharudin.themoviedb.core.data.sources.remote.TheMovieDBApi
 import dev.baharudin.themoviedb.core.domain.repositories.MovieRepository
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,20 +26,13 @@ import javax.inject.Singleton
 object CoreModule {
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-//        val passphrase: ByteArray = SQLiteDatabase.getBytes("database".toCharArray())
-//        val factory = SupportFactory(passphrase)
-        return Room.databaseBuilder(
-            context, AppDatabase::class.java, "database"
-        ).allowMainThreadQueries()
-//            .fallbackToDestructiveMigration()
-//            .openHelperFactory(factory)
-            .build()
-    }
+    fun provideCoreDatabase(@ApplicationContext context: Context): CoreDatabase =
+        CoreDatabase.create(context)
 
     @Singleton
     @Provides
     fun provideHttpClient(): OkHttpClient {
+        // Create client and add API Key
         val client = OkHttpClient.Builder().readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS).addInterceptor { chain ->
                 val request = chain.request().newBuilder().url(chain.request().url)
@@ -48,6 +41,7 @@ object CoreModule {
                 chain.proceed(request)
             }
 
+        // Add interceptors
         if (BuildConfig.DEBUG) {
             val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
@@ -71,11 +65,11 @@ object CoreModule {
 
     @Provides
     @Singleton
-    fun provideGenreDao(appDatabase: AppDatabase): GenreDao = appDatabase.genreDao()
+    fun provideGenreDao(coreDatabase: CoreDatabase): GenreDao = coreDatabase.genreDao()
 
     @Provides
     @Singleton
-    fun provideMovieDao(appDatabase: AppDatabase): MovieDao = appDatabase.movieDao()
+    fun provideMovieDao(coreDatabase: CoreDatabase): MovieDao = coreDatabase.movieDao()
 
     @Provides
     @Singleton
