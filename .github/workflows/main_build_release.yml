@@ -50,6 +50,12 @@ jobs:
       - name: Set Keystore Location
         run: echo "GH_ACTIONS_SIGNING_STORE_FILE_PATH=${{ steps.decode_keystore.outputs.filePath }}" >> $GITHUB_ENV
 
+      - name: Build and Test
+        run: ./gradlew testReleaseUnitTest
+
+      - name: Run lint
+        run: ./gradlew lintRelease
+
       - name: Build Release APK
         run: ./gradlew app:assembleRelease
 

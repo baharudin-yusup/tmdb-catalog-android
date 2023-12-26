@@ -1,12 +1,13 @@
-package dev.baharudin.themoviedb.presentation.home.genre_list
+package dev.baharudin.themoviedb.presentation.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.baharudin.themoviedb.core.domain.entities.Resource
 import dev.baharudin.themoviedb.core.domain.entities.Genre
+import dev.baharudin.themoviedb.core.domain.entities.Resource
 import dev.baharudin.themoviedb.core.domain.usecases.GetMovieGenres
 import dev.baharudin.themoviedb.presentation.common.DataState
 import kotlinx.coroutines.flow.launchIn
@@ -14,9 +15,13 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class GenreListViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val getMovieGenres: GetMovieGenres,
 ) : ViewModel() {
+
+    companion object {
+        private const val TAG = "GenreListViewModel"
+    }
 
     private val _genreList = MutableLiveData(DataState<List<Genre>>())
 
@@ -27,24 +32,29 @@ class GenreListViewModel @Inject constructor(
     }
 
     fun fetchMovieGenre() {
+        Log.d(TAG, "fetchMovieGenre: started...")
         if (_genreList.value?.isLoading != false) {
             return
         }
 
+
+        Log.d(TAG, "fetchMovieGenre: getMovieGenres use case started...")
         getMovieGenres().onEach { resource ->
+            Log.d(TAG, "fetchMovieGenre: getMovieGenres resource -> $resource")
             when (resource) {
                 is Resource.Success -> {
-                    _genreList.value = DataState(data = resource.data)
+                    _genreList.postValue(DataState(data = resource.data))
                 }
 
                 is Resource.Error -> {
-                    _genreList.value = DataState(errorMessage = resource.message)
+                    _genreList.postValue(DataState(errorMessage = resource.message))
                 }
 
                 is Resource.Loading -> {
-                    _genreList.value = DataState(isLoading = true)
+                    _genreList.postValue(DataState(isLoading = true))
                 }
             }
         }.launchIn(viewModelScope)
+        Log.d(TAG, "fetchMovieGenre: getMovieGenres finished!")
     }
 }

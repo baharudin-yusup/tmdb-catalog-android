@@ -25,19 +25,8 @@ class AboutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolbar()
         initDeveloperAvatar()
         initShareButton()
-    }
-
-    private fun initToolbar() {
-//        setSupportActionBar(binding.toolbar)
-//        // Hide action bar title
-//        supportActionBar?.setDisplayShowTitleEnabled(false)
-//        // Show action bar back button
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setDisplayShowHomeEnabled(true)
-
     }
 
     private fun initDeveloperAvatar() {

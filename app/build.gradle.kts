@@ -20,8 +20,8 @@ android {
         applicationId = "dev.baharudin.themoviedb"
         minSdk = 31
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,7 +54,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -109,6 +109,9 @@ dependencies {
     applyLifecycleDependencies()
     applyHiltDependencies()
     applyPagingDependencies()
-    applyRoomDependencies()
+    applyLocalDbDependencies()
     applyGlideDependencies()
+
+    // Specific dependencies
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 }
