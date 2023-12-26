@@ -24,4 +24,6 @@
     <string name="genre">Genre</string>
     <string name="information">Information</string>
     <string name="favorite">Favorite</string>
+
+    <string name="module_title_favorite">Favorite Movies</string>
 </resources>
