@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import dev.baharudin.themoviedb.core.data.models.IntArrayListConverter
+import dev.baharudin.themoviedb.core.data.models.ArrayListOfIntConverter
 import dev.baharudin.themoviedb.core.data.models.local.Genre
 import dev.baharudin.themoviedb.core.data.models.local.Movie
 import net.sqlcipher.database.SQLiteDatabase
@@ -16,7 +16,7 @@ import net.sqlcipher.database.SupportFactory
     version = 1,
     exportSchema = true,
 )
-@TypeConverters(IntArrayListConverter::class)
+@TypeConverters(ArrayListOfIntConverter::class)
 abstract class CoreDatabase : RoomDatabase() {
     abstract fun genreDao(): GenreDao
     abstract fun movieDao(): MovieDao
