@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragment() {
         // TODO: Improve this
-        when (intent.getStringExtra(EXTRA_FRAGMENT_DESTINATION)) {
+        val destination = intent.getStringExtra(EXTRA_FRAGMENT_DESTINATION) ?: return
+        when (destination) {
             MovieDetailFragment::class.java.simpleName -> {
                 val movie = if (Build.VERSION.SDK_INT >= 33) {
                     intent.getParcelableExtra(

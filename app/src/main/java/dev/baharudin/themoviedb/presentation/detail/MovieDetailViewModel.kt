@@ -46,6 +46,10 @@ class MovieDetailViewModel @AssistedInject constructor(
     val movie: LiveData<DataState<Movie>> = _movie
 
     init {
+        fetchMovieDetail()
+    }
+
+    private fun fetchMovieDetail() {
         getMovieDetail(initialMovie)
             .onEach { mapMovieDetail(it) }
             .launchIn(viewModelScope)

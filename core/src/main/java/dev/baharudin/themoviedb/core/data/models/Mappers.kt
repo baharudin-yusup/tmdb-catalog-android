@@ -12,6 +12,7 @@ import dev.baharudin.themoviedb.core.data.models.local.Genre as DbGenre
 import dev.baharudin.themoviedb.core.data.models.local.Movie as DbMovie
 
 fun GenreResponse.toDbEntity(): DbGenre = DbGenre(id, name)
+fun GenreResponse.toEntity(): Genre = Genre(id, name)
 fun DbGenre.toEntity(): Genre = Genre(id, name)
 
 fun AuthorDetailResponse.toEntity(): Author = Author(name, username, avatarPath)

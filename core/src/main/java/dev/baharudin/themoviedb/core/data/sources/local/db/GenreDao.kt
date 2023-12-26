@@ -10,9 +10,10 @@ import dev.baharudin.themoviedb.core.data.models.local.Genre
 interface GenreDao {
     @Query("SELECT * FROM genres")
     fun loadAll(): List<Genre>
+
     @Query("SELECT * FROM genres WHERE id IN (:genreIds)")
     fun loadAllByIds(genreIds: IntArray): List<Genre>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg genres: Genre)
+    suspend fun insertAll(vararg genres: Genre)
 }
