@@ -1,6 +1,6 @@
 object Versions {
     const val AGP = "8.2.0"
-    const val KOTLIN = "1.9.0"
+    const val KOTLIN = "1.9.10"
     const val DAGGER = "2.49"
     const val HILT = "2.48"
     const val ROOM = "2.6.1"
