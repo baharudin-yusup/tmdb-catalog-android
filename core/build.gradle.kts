@@ -6,10 +6,11 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "dev.baharudin.themoviedb.core"
+    namespace = "dev.baharudin.tmdb_android.core"
     compileSdk = 34
 
     defaultConfig {
@@ -57,16 +58,27 @@ android {
 
     buildFeatures {
         buildConfig = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     applyBasicFunctionDependencies()
     applyPagingDependencies()
     applyNetworkDependencies()
     applyLocalDbDependencies()
     applyHiltDependencies()
 
+    // UI
+    applyComposeUiDependencies()
 }
 
 ksp {

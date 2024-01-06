@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/favoriteMovieListFragment"
-        android:name="dev.baharudin.themoviedb.favorite.presentation.favorite_movie_list.FavoriteMovieListFragment"
+        android:name="dev.baharudin.tmdb_android.favorite.presentation.favorite_movie_list.FavoriteMovieListFragment"
         android:label="fragment_favorite_movie_list"
         tools:layout="@layout/fragment_favorite_movie_list">
     </fragment>

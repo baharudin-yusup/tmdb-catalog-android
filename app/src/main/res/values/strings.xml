@@ -26,4 +26,6 @@
     <string name="favorite">Favorite</string>
 
     <string name="module_title_favorite">Favorite Movies</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_start">StartActivity</string>
 </resources>

@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="dev.baharudin.themoviedb.presentation.home.HomeFragment"
+        android:name="dev.baharudin.tmdb_android.presentation.home.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
@@ -20,45 +20,45 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="dev.baharudin.themoviedb.presentation.detail.MovieDetailFragment"
+        android:name="dev.baharudin.tmdb_android.presentation.detail.MovieDetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_movie_detail" >
         <argument
             android:name="movie"
-            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
+            app:argType="dev.baharudin.tmdb_android.core.domain.entities.Movie" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="dev.baharudin.themoviedb.presentation.about.AboutFragment"
+        android:name="dev.baharudin.tmdb_android.presentation.about.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="dev.baharudin.themoviedb.presentation.movie_list.MovieListFragment"
+        android:name="dev.baharudin.tmdb_android.presentation.movie_list.MovieListFragment"
         android:label="fragment_movie_list"
         tools:layout="@layout/fragment_movie_list" >
         <argument
             android:name="genre"
-            app:argType="dev.baharudin.themoviedb.core.domain.entities.Genre" />
+            app:argType="dev.baharudin.tmdb_android.core.domain.entities.Genre" />
         <action
             android:id="@+id/action_movieListFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieReviewFragment"
-        android:name="dev.baharudin.themoviedb.presentation.detail.movie_review.MovieReviewFragment"
+        android:name="dev.baharudin.tmdb_android.presentation.detail.movie_review.MovieReviewFragment"
         android:label="MovieReviewFragment" >
         <argument
             android:name="movie"
-            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
+            app:argType="dev.baharudin.tmdb_android.core.domain.entities.Movie" />
     </fragment>
     <fragment
         android:id="@+id/movieInfoFragment"
-        android:name="dev.baharudin.themoviedb.presentation.detail.movie_info.MovieInfoFragment"
+        android:name="dev.baharudin.tmdb_android.presentation.detail.movie_info.MovieInfoFragment"
         android:label="fragment_movie_info"
         tools:layout="@layout/fragment_movie_info" >
         <argument
             android:name="movie"
-            app:argType="dev.baharudin.themoviedb.core.domain.entities.Movie" />
+            app:argType="dev.baharudin.tmdb_android.core.domain.entities.Movie" />
     </fragment>
 </navigation>

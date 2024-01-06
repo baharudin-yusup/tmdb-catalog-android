@@ -5,6 +5,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
     id("kotlin-android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
@@ -13,17 +14,20 @@ plugins {
 }
 
 android {
-    namespace = "dev.baharudin.themoviedb"
+    namespace = "dev.baharudin.tmdb_android"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "dev.baharudin.themoviedb"
+        applicationId = "dev.baharudin.tmdb_android"
         minSdk = 31
         targetSdk = 34
         versionCode = 2
         versionName = "1.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     signingConfigs {
@@ -79,6 +83,11 @@ android {
         kotlinCompilerExtensionVersion = "1.5.3"
     }
     dynamicFeatures += setOf(":favorite")
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 
     applicationVariants.all {
         val variant = this
@@ -105,35 +114,44 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+
+    // UI
+    applyBasicUiDependencies()
+    applyPagingDependencies()
+    applyComposeUiDependencies()
 
     applyBasicFunctionDependencies()
-    applyBasicUiDependencies()
+
+
     applyNetworkDependencies()
     applyCoroutinesDependencies()
     applyLifecycleDependencies()
     applyHiltDependencies()
-    applyPagingDependencies()
     applyLocalDbDependencies()
     applyGlideDependencies()
 
     // Specific dependencies
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
 
-    val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    // Material Design 3
-    implementation("androidx.compose.material3:material3")
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
+
+
+    // Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    // TODO: Add the dependencies for Firebase products you want to use
+    implementation("com.google.firebase:firebase-analytics")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.8.2")
-    // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
+
 }
