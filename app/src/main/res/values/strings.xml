@@ -4,7 +4,6 @@
     <string name="about">About Developer</string>
     <string name="home_fragment_title">Select Genre</string>
     <string name="movie_list_fragment_title">%1$s Movies</string>
-    <string name="movie_thumbnail">Movie thumbnail</string>
     <string name="developer_avatar">Developer Avatar</string>
     <string name="developer_name">Baharudin Yusup</string>
     <string name="developer_email">hi@baharudin.dev</string>
@@ -24,4 +23,8 @@
     <string name="genre">Genre</string>
     <string name="information">Information</string>
     <string name="favorite">Favorite</string>
+
+    <string name="module_title_favorite">Favorite Movies</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_start">StartActivity</string>
 </resources>
