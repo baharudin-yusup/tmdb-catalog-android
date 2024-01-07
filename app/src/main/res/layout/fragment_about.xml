@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.about.AboutFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/root_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        tools:viewBindingIgnore="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/root_developer_avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="100dp"
+            tools:viewBindingIgnore="true">
+
+            <ImageView
+                android:id="@+id/img_developer_avatar"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:contentDescription="@string/developer_avatar"
+                android:scaleType="fitCenter"
+                tools:src="@tools:sample/avatars" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="@string/developer_name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:paddingTop="4dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/developer_email" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/share_button"
+        android:text="@string/share"
+        android:tooltipText="@string/share"
+        app:icon="@android:drawable/ic_menu_share" />
+
+
+</FrameLayout>

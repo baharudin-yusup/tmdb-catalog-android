@@ -31,11 +31,9 @@ object Dependencies {
     const val DAGGER_COMPILER = "com.google.dagger:dagger:${Versions.DAGGER}"
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val HILT_COMPILER = "com.google.dagger:hilt-compiler:${Versions.HILT}"
-    const val HILT_NAVIGATION_COMPOSE = "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     // Paging
     const val PAGING_RUNTIME = "androidx.paging:paging-runtime-ktx:${Versions.PAGING}"
-    const val PAGING_COMPOSE = "androidx.paging:paging-compose:${Versions.PAGING}"
 
     // Room
     const val ROOM = "androidx.room:room-ktx:${Versions.ROOM}"
@@ -55,17 +53,10 @@ object Dependencies {
 
     // Test
     const val JUNIT_JUPITER = "org.junit.jupiter:junit-jupiter:5.8.1"
-
-    // Compose
-    const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAVIGATION}"
 }
 
 private fun DependencyHandler.implementation(dependency: Any) {
     add("implementation", dependency)
-}
-
-private fun DependencyHandler.debugImplementation(dependency: Any) {
-    add("debugImplementation", dependency)
 }
 
 
@@ -110,14 +101,11 @@ fun DependencyHandler.applyDaggerDependencies() {
 
 fun DependencyHandler.applyHiltDependencies() {
     implementation(Dependencies.HILT_ANDROID)
-    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
-    implementation(Dependencies.HILT_NAVIGATION_COMPOSE)
     ksp(Dependencies.HILT_COMPILER)
 }
 
 fun DependencyHandler.applyPagingDependencies() {
     implementation(Dependencies.PAGING_RUNTIME)
-    implementation(Dependencies.PAGING_COMPOSE)
 }
 
 fun DependencyHandler.applyLocalDbDependencies() {
@@ -157,30 +145,4 @@ fun DependencyHandler.applyBasicUiDependencies() {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation(Dependencies.NAVIGATION_FRAGMENT)
     implementation(Dependencies.NAVIGATION_UI)
-}
-
-fun DependencyHandler.applyComposeUiDependencies() {
-    val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    implementation("androidx.compose.ui:ui-graphics")
-    // Material Design 3
-    implementation("androidx.compose.material3:material3:1.2.0-beta01")
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.8.2")
-    // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
-
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
-
-    implementation(Dependencies.NAVIGATION_COMPOSE)
 }

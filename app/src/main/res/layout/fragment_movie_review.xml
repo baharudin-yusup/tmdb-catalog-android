@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.detail.movie_review.MovieReviewFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_reviews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="12dp" />
+
+    <ProgressBar
+        android:id="@+id/pb_root"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:minWidth="60dp"
+        android:minHeight="60dp"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_retry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/please_try_again" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_refresh"
+            android:text="@string/retry" />
+    </LinearLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_no_reviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/no_reviews"
+        android:visibility="visible" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
