@@ -11,7 +11,7 @@
 #-keep class com.google.gson.stream.** { *; }
 
 # Application classes that will be serialized/deserialized over Gson
--keep class dev.baharudin.themoviedb.core.data.models.remote.**.** { <fields>; }
+-keep class dev.baharudin.tmdb_android.core.data.models.remote.**.** { <fields>; }
 
 # Prevent proguard from stripping interface information from TypeAdapter, TypeAdapterFactory,
 # JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
@@ -86,8 +86,8 @@
 
 
 # Keep Kotlin metadata for Kotlin Parcelable classes
--keepnames class dev.baharudin.themoviedb.core.domain.entities.** { *; }
--keep class dev.baharudin.themoviedb.core.domain.entities.**$$Parcelable { *; }
+-keepnames class dev.baharudin.tmdb_android.core.domain.entities.** { *; }
+-keep class dev.baharudin.tmdb_android.core.domain.entities.**$$Parcelable { *; }
 
 
 

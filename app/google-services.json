@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "697027570570",
+    "project_id": "portfolio-tmdb",
+    "storage_bucket": "portfolio-tmdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697027570570:android:1d12b6a45f84f9ba507673",
+        "android_client_info": {
+          "package_name": "dev.baharudin.tmdb_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697027570570-al2riun7ibj7mhc9uegvtsupludqghjn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.baharudin.tmdb_android",
+            "certificate_hash": "bff8348fecbeb598e7442ddfc80f3a1cfaa2bd3d"
+          }
+        },
+        {
+          "client_id": "697027570570-r58oe3mmhose5bqm4gfpjbp73pqidkc0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.baharudin.tmdb_android",
+            "certificate_hash": "34dbe753098371ab0763edead3686adc2bb256e3"
+          }
+        },
+        {
+          "client_id": "697027570570-6qt43qg29hmtb965c93rjp825t7ks0ti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw0UoG8QDmyaZ_zT07ij_xa5mIkZ0IRoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697027570570-6qt43qg29hmtb965c93rjp825t7ks0ti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
