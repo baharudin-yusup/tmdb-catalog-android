@@ -1,6 +1,7 @@
 package dev.baharudin.tmdb_android.core.data.models
 
 import dev.baharudin.tmdb_android.core.data.models.remote.get_genre_list.GenreResponse
+import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_detail.MovieDetailResponse
 import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_list.MovieResponse
 import dev.baharudin.tmdb_android.core.data.models.remote.get_review_list.AuthorDetailResponse
 import dev.baharudin.tmdb_android.core.data.models.remote.get_review_list.ReviewResponse
@@ -52,6 +53,23 @@ fun MovieResponse.toDbEntity(isFavorite: Boolean = false): DbMovie = DbMovie(
     backdropPath = backdropPath,
     isFavorite = isFavorite,
     overview = overview
+)
+
+fun MovieDetailResponse.toEntity(isFavorite: Boolean) = Movie(
+    backdropPath = backdropPath,
+    genres = genres.map { it.toEntity() },
+    id = id,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    overview = overview,
+    popularity = popularity,
+    posterPath = posterPath,
+    releaseDate = releaseDate,
+    title = title,
+    video = video,
+    voteAverage = voteAverage,
+    voteCount = voteCount,
+    isFavorite = isFavorite
 )
 
 fun Movie.toDbEntity(): DbMovie = DbMovie(

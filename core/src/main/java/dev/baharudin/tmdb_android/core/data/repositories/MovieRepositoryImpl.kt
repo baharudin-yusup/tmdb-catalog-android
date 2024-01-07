@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_detail.MovieDetailResponse
 import dev.baharudin.tmdb_android.core.data.models.toDbEntity
 import dev.baharudin.tmdb_android.core.data.models.toEntity
 import dev.baharudin.tmdb_android.core.data.sources.MovieListSource
@@ -27,7 +28,7 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     companion object {
-        private const val TAG = "MovieRepositoryImpl"
+        private const val TAG = "(RP) MovieRepository"
     }
 
     override suspend fun getMovieGenres(): List<Genre> {
@@ -47,15 +48,21 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieDetail(movieId: Int): Movie {
+        Log.d(TAG, "getMovieDetail: started...")
         val savedMovie = movieDao.loadMovieById(movieId)
+        Log.d(TAG, "getMovieDetail: get saved movie success!")
 
-        val movieResponse = theMovieDBApi.getMovieDetail(movieId)
+        Log.d(TAG, "getMovieDetail: get movie detail from remote API started...")
+        val movieDetailResponse: MovieDetailResponse
+        try {
+            movieDetailResponse = theMovieDBApi.getMovieDetail(movieId)
+            Log.d(TAG, "getMovieDetail: get movie detail from remote API success!")
+        } catch (e: Exception) {
+            Log.e(TAG, "getMovieDetail: get movie detail from remote API error!", e)
+            throw e
+        }
 
-        val movieGenres =
-            genreDao
-                .loadAllByIds(movieResponse.genreIds.toIntArray())
-                .map { it.toEntity() }
-        return movieResponse.toEntity(movieGenres, savedMovie.isFavorite)
+        return movieDetailResponse.toEntity(savedMovie.isFavorite)
     }
 
     override fun getFavoriteMovies(): Flow<List<Movie>> {
@@ -69,6 +76,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override fun discoverMoviesByGenre(genre: Genre): Flow<PagingData<Movie>> {
+        Log.d(TAG, "discoverMoviesByGenre: $genre started...")
         return Pager(
             config = PagingConfig(
                 pageSize = 2,
@@ -76,7 +84,38 @@ class MovieRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = {
                 MovieListSource(
-                    theMovieDBApi, genre
+                    theMovieDBApi, MovieListSource.QueryParams(genre.name)
+                )
+            }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                val selectedMovie = movieDao.loadMovieByIds(intArrayOf(it.id))
+                val isFavorite = if (selectedMovie.isEmpty()) {
+                    movieDao.insertAll(it.toDbEntity())
+                    false
+                } else {
+                    selectedMovie.first().isFavorite
+                }
+
+                val genres =
+                    genreDao.loadAllByIds(it.genreIds.toIntArray())
+                        .map { data -> data.toEntity() }
+
+                it.toEntity(genres = genres, isFavorite = isFavorite)
+            }
+        }
+    }
+
+    override fun discoverMoviesByGenre(genreName: String): Flow<PagingData<Movie>> {
+        Log.d(TAG, "discoverMoviesByGenre: $genreName started...")
+        return Pager(
+            config = PagingConfig(
+                pageSize = 2,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                MovieListSource(
+                    theMovieDBApi, MovieListSource.QueryParams(genreName)
                 )
             }
         ).flow.map { pagingData ->

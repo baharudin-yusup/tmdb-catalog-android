@@ -1,7 +1,5 @@
 package dev.baharudin.tmdb_android.core.presentation.common.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,13 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
+import dev.baharudin.tmdb_android.core.R
 import dev.baharudin.tmdb_android.core.domain.entities.Genre
 import dev.baharudin.tmdb_android.core.domain.entities.Movie
 import dev.baharudin.tmdb_android.core.presentation.common.utils.toImageUrl
@@ -40,9 +38,9 @@ fun MovieCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Thumbnail
-            Image(
-                painter = rememberImagePainter(movie.posterPath.toImageUrl()),
-                contentDescription = null,
+            AsyncImage(
+                model = movie.posterPath.toImageUrl(),
+                contentDescription = stringResource(R.string.movie_thumbnail),
                 modifier = Modifier
                     .size(width = 113.3.dp, height = 170.dp),
                 contentScale = ContentScale.Fit

@@ -16,11 +16,6 @@
         android:theme="@style/Theme.TheMovieDB"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".presentation.StartActivity"
-            android:exported="false"
-            android:label="@string/title_activity_start"
-            android:theme="@style/Theme.TheMovieDB" />
-        <activity
             android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>

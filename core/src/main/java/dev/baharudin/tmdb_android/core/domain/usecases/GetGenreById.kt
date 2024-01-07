@@ -14,17 +14,16 @@ class GetGenreById @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     companion object {
-        private const val TAG = "GetGenreById"
+        private const val TAG = "(UC) GetGenreById"
     }
 
     operator fun invoke(genreId: Int): Flow<Resource<Genre>> = flow {
         try {
-            Log.d(TAG, "invoke: started...")
-            emit(Resource.Loading())
             Log.d(TAG, "invoke: calling get movie genre by id started...")
+            emit(Resource.Loading())
             val result = movieRepository.getMovieGenreById(genreId)
             Log.d(TAG, "invoke: calling get movie genre by id success!")
-            Log.d(TAG, "invoke: genres result -> $result")
+            Log.d(TAG, "invoke: genres result = $result")
             emit(Resource.Success(result))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

@@ -1,24 +1,30 @@
 package dev.baharudin.tmdb_android.core.data.sources
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_list.MovieResponse
 import dev.baharudin.tmdb_android.core.data.sources.remote.TheMovieDBApi
-import dev.baharudin.tmdb_android.core.domain.entities.Genre
 import retrofit2.HttpException
 import java.io.IOException
 
 class MovieListSource(
     private val theMovieDBApi: TheMovieDBApi,
-    private val genre: Genre,
+    private val query: QueryParams,
 ) : PagingSource<Int, MovieResponse>() {
 
+    data class QueryParams(val genreName: String)
+
+    companion object {
+        const val TAG = "(DS) MovieListSource"
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
+        Log.d(TAG, "load: params = $params")
         val pageIndex = params.key ?: 1
         return try {
             val response = theMovieDBApi.getMovieList(
-                withGenres = genre.name,
+                withGenres = query.genreName,
                 page = pageIndex
             )
             val movies = response.results
@@ -46,16 +52,14 @@ class MovieListSource(
         }
     }
 
-    /**
-     * The refresh key is used for subsequent calls to PagingSource.Load after the initial load.
-     */
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
-        // We need to get the previous key (or next key if previous is null) of the page
-        // that was closest to the most recently accessed index.
-        // Anchor position is the most recently accessed index.
         return state.anchorPosition?.let { anchorPosition ->
+            Log.d(TAG, "getRefreshKey: anchorPosition is $anchorPosition")
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        } ?: run {
+            Log.d(TAG, "getRefreshKey: anchorPosition is null")
+            null
         }
     }
 }

@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.baharudin.tmdb_android"
-        minSdk = 31
+        minSdk = 30
         targetSdk = 34
         versionCode = 2
         versionName = "1.1.1"
@@ -82,7 +82,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3"
     }
-    dynamicFeatures += setOf(":favorite")
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

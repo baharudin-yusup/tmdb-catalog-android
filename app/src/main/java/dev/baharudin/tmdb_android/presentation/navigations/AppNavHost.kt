@@ -8,10 +8,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.baharudin.tmdb_android.presentation.detail.MovieDetailScreen
-import dev.baharudin.tmdb_android.presentation.home.HomeScreen
-import dev.baharudin.tmdb_android.presentation.movie_list.MovieListScreen
-import dev.baharudin.tmdb_android.presentation.movie_list.MovieListViewModel
+import dev.baharudin.tmdb_android.presentation.screens.detail.MovieDetailScreen
+import dev.baharudin.tmdb_android.presentation.screens.favorite_movie_list.FavoriteMovieListScreen
+import dev.baharudin.tmdb_android.presentation.screens.home.HomeScreen
+import dev.baharudin.tmdb_android.presentation.screens.movie_list.MovieListScreen
+import dev.baharudin.tmdb_android.presentation.screens.movie_list.MovieListViewModel
 
 @Composable
 fun AppNavHost(
@@ -28,8 +29,18 @@ fun AppNavHost(
             HomeScreen(navController)
         }
 
-        composable(NavigationItem.MovieList.route, NavigationItem.MovieList.navArgument) {
-            MovieListScreen(navController = navController)
+        composable(
+            NavigationItem.MovieList.route,
+            NavigationItem.MovieList.navArgument
+        ) { backStackEntry ->
+            val onlyFavorite: Boolean =
+                checkNotNull(backStackEntry.arguments?.getBoolean("onlyFavorite"))
+
+            if (onlyFavorite) {
+                FavoriteMovieListScreen(navController = navController)
+            } else {
+                MovieListScreen(navController = navController)
+            }
         }
 
         composable(NavigationItem.MovieDetail.route, NavigationItem.MovieDetail.navArgument) {

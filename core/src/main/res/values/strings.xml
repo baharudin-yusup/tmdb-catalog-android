@@ -2,4 +2,5 @@
 <resources>
     <string name="retry">Retry</string>
     <string name="please_try_again">Oops! please try again!</string>
+    <string name="movie_thumbnail">Movie thumbnail</string>
 </resources>

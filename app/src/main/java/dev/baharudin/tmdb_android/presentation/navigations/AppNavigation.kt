@@ -6,13 +6,22 @@ import androidx.navigation.navArgument
 
 sealed class NavigationItem(val route: String, val navArgument: List<NamedNavArgument> = listOf()) {
     data object Home : NavigationItem("home")
-    data object MovieList : NavigationItem("movies?genreId={genreId}", listOf(
-        navArgument("genreId") {
-            type = NavType.IntType
-        }
-    ))
-
-    data object FavoriteList : NavigationItem("favorites")
+    data object MovieList : NavigationItem(
+        "movies?genreId={genreId}&genreName={genreName}&onlyFavorite={onlyFavorite}", listOf(
+            navArgument("genreId") {
+                type = NavType.IntType
+                defaultValue = 0
+            },
+            navArgument("genreName") {
+                type = NavType.StringType
+                nullable = true
+            },
+            navArgument("onlyFavorite") {
+                type = NavType.BoolType
+                defaultValue = false
+            },
+        )
+    )
 
     data object MovieDetail : NavigationItem("movies/{movieId}", listOf(
         navArgument("movieId") {
@@ -26,5 +35,12 @@ fun String.buildRoute(arguments: Map<String, Any> = mapOf()): String {
     arguments.forEach { (key, value) ->
         output = output.replace("{$key}", "$value")
     }
+
+    output = output.replace("[?&][^&?]*=\\{[^{}]*\\}".toRegex(), "")
+
+    if (output.contains("&") && !output.contains("?")) {
+        output = output.replaceFirst("&", "?")
+    }
+
     return output
 }
