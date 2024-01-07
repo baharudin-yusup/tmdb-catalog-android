@@ -21,7 +21,7 @@ android {
         applicationId = "dev.baharudin.tmdb_android"
         minSdk = 30
         targetSdk = 34
-        versionCode = 2
+        versionCode = 3
         versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
