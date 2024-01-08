@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import dev.baharudin.tmdb_android.core.R
 
 @Composable
-fun RetrySection(onRetryClick: () -> Unit, errorMessage: String) {
+fun RetrySection(errorMessage: String?, onRetryClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -23,7 +23,7 @@ fun RetrySection(onRetryClick: () -> Unit, errorMessage: String) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.please_try_again),
+            text = errorMessage ?: stringResource(id = R.string.please_try_again),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )

@@ -44,68 +44,54 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
         genres?.errorMessage?.showErrorMessage(LocalContext.current)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = stringResource(id = R.string.home_fragment_title)) },
-                actions = {
-                    IconButton(onClick = { /* TODO: Handle about button click */ }) {
-                        Icon(imageVector = Icons.Default.Info, contentDescription = null)
-                    }
+    Scaffold(topBar = {
+        TopAppBar(title = { Text(text = stringResource(id = R.string.home_fragment_title)) },
+            actions = {
+                IconButton(onClick = { /* TODO: Handle about button click */ }) {
+                    Icon(imageVector = Icons.Default.Info, contentDescription = null)
                 }
+            })
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = {
+            val route = NavigationItem.MovieList.route.buildRoute(
+                mapOf("onlyFavorite" to true)
             )
+            Log.d("HomeScreen", "navigate to $route")
+            navController.navigate(route)
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    val route = NavigationItem.MovieList.route.buildRoute(
-                        mapOf(
-                            "onlyFavorite" to true,
-                        )
-                    )
-                    Log.d("HomeScreen", "navigate to $route")
-                    navController.navigate(route)
-
-                },
-                content = { Icon(imageVector = Icons.Default.Favorite, contentDescription = null) }
-            )
-        },
-        content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+            content = { Icon(imageVector = Icons.Default.Favorite, contentDescription = null) })
+    }, content = { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
+            FlowRow(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                FlowRow(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                ) {
-                    genres?.data?.forEach {
-                        GenreCard(it) { genre ->
-                            val route = NavigationItem.MovieList.route.buildRoute(
-                                mapOf(
-                                    "genreId" to genre.id,
-                                    "genreName" to genre.name
-                                )
+                genres?.data?.forEach {
+                    GenreCard(it) { genre ->
+                        val route = NavigationItem.MovieList.route.buildRoute(
+                            mapOf(
+                                "genreId" to genre.id, "genreName" to genre.name
                             )
-                            Log.d("HomeScreen", "navigate to $route")
-                            navController.navigate(route)
-                        }
-                    }
-                }
-
-                if (genres?.isLoading == true) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .width(64.dp),
                         )
+                        Log.d("HomeScreen", "navigate to $route")
+                        navController.navigate(route)
                     }
                 }
             }
+
+            if (genres?.isLoading == true) {
+                Box(
+                    modifier = Modifier.align(Alignment.Center),
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.width(64.dp),
+                    )
+                }
+            }
         }
-    )
+    })
 }

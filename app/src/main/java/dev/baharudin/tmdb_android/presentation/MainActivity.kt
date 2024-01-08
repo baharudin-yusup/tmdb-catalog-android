@@ -14,27 +14,14 @@ import dev.baharudin.tmdb_android.presentation.theme.TheMovieDBTheme
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        const val EXTRA_FRAGMENT_DESTINATION = "fragment_destination"
-        const val EXTRA_PARCELABLE = "parcelable"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TheMovieDBTheme {
-                MainScreen()
+                Surface {
+                    AppNavHost(navController = rememberNavController())
+                }
             }
         }
-    }
-}
-
-@Composable
-fun MainScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        AppNavHost(navController = rememberNavController())
     }
 }
