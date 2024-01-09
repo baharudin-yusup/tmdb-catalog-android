@@ -13,18 +13,11 @@ import dev.baharudin.tmdb_android.core.domain.entities.Resource
 import dev.baharudin.tmdb_android.core.domain.usecases.DiscoverMovies
 import dev.baharudin.tmdb_android.core.domain.usecases.GetGenreById
 import dev.baharudin.tmdb_android.presentation.common.DataState
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,19 +34,30 @@ class MovieListViewModel @Inject constructor(
     private val genreName: String = checkNotNull(savedStateHandle["genreName"])
 
     private val _genre = MutableStateFlow<DataState<Genre>>(DataState())
-    val genre: StateFlow<DataState<Genre>> get() = _genre
+    val genreState: StateFlow<DataState<Genre>> get() = _genre.asStateFlow()
 
-    val movies: StateFlow<PagingData<Movie>>
-        get() = discoverMovies(genreName).cachedIn(viewModelScope)
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
+    private val _moviesState: MutableStateFlow<PagingData<Movie>> = MutableStateFlow(value = PagingData.empty())
+     val moviesState: StateFlow<PagingData<Movie>> get() = _moviesState
 
     init {
-        getGenre()
+        onEvent(MovieListEvent.Init)
     }
 
-    private fun getGenre() {
-        getGenreById(genreId).onEach { resource ->
-            Log.d(TAG, "getGenre: resource = $resource")
+    fun onEvent(event: MovieListEvent) {
+        viewModelScope.launch {
+            when(event) {
+                MovieListEvent.Init -> {
+                    getGenre()
+                    getMovieList()
+                }
+            }
+        }
+    }
+
+    private suspend fun getGenre() {
+        getGenreById(genreId)
+            .distinctUntilChanged()
+            .collect { resource ->
             when (resource) {
                 is Resource.Error -> {
                     _genre.value = DataState(errorMessage = resource.message)
@@ -67,6 +71,15 @@ class MovieListViewModel @Inject constructor(
                     _genre.value = DataState(data = resource.data)
                 }
             }
-        }.launchIn(viewModelScope)
+        }
+    }
+
+    private suspend fun getMovieList() {
+        discoverMovies(genreName)
+            .distinctUntilChanged()
+            .cachedIn(viewModelScope)
+            .collect {
+                _moviesState.value = it
+            }
     }
 }

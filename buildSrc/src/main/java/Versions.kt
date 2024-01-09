@@ -1,6 +1,7 @@
 object Versions {
     const val AGP = "8.2.1"
-    const val KOTLIN = "1.9.10"
+    const val KSP = "1.9.21-1.0.16"
+    const val KOTLIN = "1.9.21"
     const val DAGGER = "2.49"
     const val HILT = "2.48"
     const val ROOM = "2.6.1"
@@ -11,4 +12,5 @@ object Versions {
     const val GLIDE = "4.16.0"
     const val PAGING = "3.2.1"
     const val NAVIGATION = "2.7.6"
+    const val COMPOSE_COMPILER = "1.5.7"
 }
