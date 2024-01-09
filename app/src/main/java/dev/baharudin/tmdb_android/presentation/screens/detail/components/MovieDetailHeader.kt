@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import dev.baharudin.tmdb_android.R
 import dev.baharudin.tmdb_android.core.R as CoreR
 import dev.baharudin.tmdb_android.core.domain.entities.Genre
@@ -48,13 +50,23 @@ fun MovieDetailHeader(
             modifier = Modifier.fillMaxWidth()
         ) {
             // Poster
-            AsyncImage(
+            SubcomposeAsyncImage(
                 model = movie.posterPath.toImageUrl(),
                 contentDescription = stringResource(CoreR.string.movie_thumbnail),
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(8.dp))
                     .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
                 contentScale = ContentScale.Fit,
+                loading = {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             )
 
             // Small Info
