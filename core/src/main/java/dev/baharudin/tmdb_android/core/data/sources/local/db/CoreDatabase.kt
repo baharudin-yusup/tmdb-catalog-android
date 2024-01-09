@@ -1,6 +1,7 @@
 package dev.baharudin.tmdb_android.core.data.sources.local.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -13,8 +14,11 @@ import net.sqlcipher.database.SupportFactory
 
 @Database(
     entities = [Genre::class, Movie::class],
-    version = 1,
+    version = 2,
     exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 @TypeConverters(ArrayListOfIntConverter::class)
 abstract class CoreDatabase : RoomDatabase() {
