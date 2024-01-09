@@ -38,15 +38,10 @@ android {
                 keyAlias = System.getenv("GH_ACTIONS_SIGNING_KEY_ALIAS")
                 keyPassword = System.getenv("GH_ACTIONS_SIGNING_KEY_PASSWORD")
             } else {
-                // Create a variable called keystorePropertiesFile, and initialize it to your
-                // keystore.properties file, in the rootProject folder.
                 val keystorePropertiesFile = rootProject.file("keystore.properties")
-
-                // Initialize a new Properties() object called keystoreProperties.
-                val keystoreProperties = Properties()
-
-                // Load your keystore.properties file into the keystoreProperties object.
-                keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+                val keystoreProperties = Properties().apply {
+                    load(FileInputStream(keystorePropertiesFile))
+                }
 
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
@@ -80,7 +75,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
     packaging {
         resources {

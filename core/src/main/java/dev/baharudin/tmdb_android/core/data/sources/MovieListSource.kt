@@ -21,22 +21,20 @@ class MovieListSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieResponse> {
         Log.d(TAG, "load: params = $params")
-        val pageIndex = params.key ?: 1
+        val currentPage = params.key ?: 1
         return try {
             val response = theMovieDBApi.getMovieList(
                 withGenres = query.genreName,
-                page = pageIndex
+                page = currentPage
             )
             val movies = response.results
-            val nextKey =
-                if (movies.isEmpty()) {
-                    null
-                } else {
-                    pageIndex + 1
-                }
+
+            val prevKey = if (currentPage == 1) null else currentPage - 1
+            val nextKey = if (movies.isEmpty()) null else currentPage + 1
+
             LoadResult.Page(
                 data = movies,
-                prevKey = if (pageIndex == 1) null else pageIndex,
+                prevKey = prevKey,
                 nextKey = nextKey
             )
         } catch (e: IOException) {
@@ -53,13 +51,6 @@ class MovieListSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            Log.d(TAG, "getRefreshKey: anchorPosition is $anchorPosition")
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        } ?: run {
-            Log.d(TAG, "getRefreshKey: anchorPosition is null")
-            null
-        }
+        return state.anchorPosition
     }
 }

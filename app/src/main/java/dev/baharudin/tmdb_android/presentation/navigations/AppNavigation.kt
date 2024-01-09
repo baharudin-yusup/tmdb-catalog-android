@@ -6,6 +6,7 @@ import androidx.navigation.navArgument
 
 sealed class NavigationItem(val route: String, val navArgument: List<NamedNavArgument> = listOf()) {
     data object Home : NavigationItem("home")
+    data object About : NavigationItem("about")
     data object MovieList : NavigationItem(
         "movies?genreId={genreId}&genreName={genreName}&onlyFavorite={onlyFavorite}", listOf(
             navArgument("genreId") {

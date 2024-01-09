@@ -4,7 +4,10 @@
     <string name="about">About Developer</string>
     <string name="home_fragment_title">Select Genre</string>
     <string name="movie_list_fragment_title">%1$s Movies</string>
-    <string name="developer_avatar">Developer Avatar</string>
+
+    <!-- About developer screen -->
+    <string name="about_screen_top_appbar_title">About Developer</string>
+    <string name="developer_profile_picture">Developer profile picture</string>
     <string name="developer_name">Baharudin Yusup</string>
     <string name="developer_email">hi@baharudin.dev</string>
 
