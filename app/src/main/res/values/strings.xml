@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TMDB Android</string>
+    <string name="app_name">TMDB Catalog</string>
 
     <string name="about">About Developer</string>
     <string name="home_fragment_title">Select Genre</string>
