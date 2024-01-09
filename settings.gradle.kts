@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "The Movie DB"
+rootProject.name = "TMDB Catalog"
 include(":app")
 include(":core")
