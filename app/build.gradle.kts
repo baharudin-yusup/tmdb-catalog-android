@@ -21,7 +21,7 @@ android {
         applicationId = "dev.baharudin.tmdb_android"
         minSdk = 30
         targetSdk = 34
-        versionCode = 4
+        versionCode = 5
         versionName = "1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -58,6 +58,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
 
             signingConfig = signingConfigs.getByName("release")
         }
