@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import dev.baharudin.tmdb_android.presentation.screens.about.AboutScreen
 import dev.baharudin.tmdb_android.presentation.screens.detail.MovieDetailScreen
 import dev.baharudin.tmdb_android.presentation.screens.favorite_movie_list.FavoriteMovieListScreen
 import dev.baharudin.tmdb_android.presentation.screens.home.HomeScreen
@@ -28,6 +29,11 @@ fun AppNavHost(
         composable(NavigationItem.Home.route) {
             HomeScreen(navController)
         }
+
+        composable(NavigationItem.About.route) {
+            AboutScreen()
+        }
+
 
         composable(
             NavigationItem.MovieList.route,

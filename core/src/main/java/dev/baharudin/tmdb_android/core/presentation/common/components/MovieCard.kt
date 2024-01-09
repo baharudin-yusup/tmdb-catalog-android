@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import dev.baharudin.tmdb_android.core.R
 import dev.baharudin.tmdb_android.core.domain.entities.Genre
 import dev.baharudin.tmdb_android.core.domain.entities.Movie
@@ -38,12 +40,22 @@ fun MovieCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Thumbnail
-            AsyncImage(
+            SubcomposeAsyncImage(
                 model = movie.posterPath.toImageUrl(),
                 contentDescription = stringResource(R.string.movie_thumbnail),
                 modifier = Modifier
                     .size(width = 113.3.dp, height = 170.dp),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Fit,
+                loading = {
+                    Box(
+                        modifier = Modifier
+                            .size(width = 113.3.dp, height = 170.dp)
+                            .padding(24.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             )
 
             Column(
@@ -89,7 +101,7 @@ fun MovieCard(
                     contentPadding = PaddingValues(horizontal = 8.dp)
                 ) {
                     items(movie.genres) {
-                        GenreCard(it) {/* TODO: Handle this */}
+                        GenreCard(it) {/* TODO: Handle this */ }
                     }
                 }
             }

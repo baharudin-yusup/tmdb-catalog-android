@@ -45,12 +45,18 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
     }
 
     Scaffold(topBar = {
-        TopAppBar(title = { Text(text = stringResource(id = R.string.home_fragment_title)) },
-            actions = {
-                IconButton(onClick = { /* TODO: Handle about button click */ }) {
-                    Icon(imageVector = Icons.Default.Info, contentDescription = null)
-                }
-            })
+        TopAppBar(title = {
+            Text(text = stringResource(id = R.string.home_fragment_title))
+        }, actions = {
+            IconButton(
+                onClick = {
+                    val route = NavigationItem.About.route
+                    navController.navigate(route)
+                },
+            ) {
+                Icon(imageVector = Icons.Default.Info, contentDescription = null)
+            }
+        })
     }, floatingActionButton = {
         FloatingActionButton(onClick = {
             val route = NavigationItem.MovieList.route.buildRoute(
@@ -58,8 +64,7 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
             )
             Log.d("HomeScreen", "navigate to $route")
             navController.navigate(route)
-        },
-            content = { Icon(imageVector = Icons.Default.Favorite, contentDescription = null) })
+        }, content = { Icon(imageVector = Icons.Default.Favorite, contentDescription = null) })
     }, content = { innerPadding ->
         Box(
             modifier = Modifier
