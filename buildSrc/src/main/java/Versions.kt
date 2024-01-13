@@ -8,7 +8,6 @@ object Versions {
     const val OKHTTP = "4.11.0"
     const val COROUTINES = "1.7.1"
     const val LIFECYCLE = "2.7.0"
-    const val GLIDE = "4.16.0"
     const val PAGING = "3.2.1"
     const val NAVIGATION = "2.7.6"
     const val COMPOSE_COMPILER = "1.5.7"
