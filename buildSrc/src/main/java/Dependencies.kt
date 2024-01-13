@@ -81,15 +81,3 @@ fun DependencyHandler.annotationProcessor(dependency: Any) {
 
 
 
-fun DependencyHandler.applyGlideDependencies() {
-    implementation(Dependencies.GLIDE)
-    annotationProcessor(Dependencies.GLIDE_COMPILER)
-    ksp(Dependencies.GLIDE_KSP)
-}
-
-
-
-
-
-
-
