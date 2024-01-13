@@ -1,6 +1,5 @@
 package dev.baharudin.tmdb_android.presentation.screens.movie_list
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,8 +35,9 @@ class MovieListViewModel @Inject constructor(
     private val _genre = MutableStateFlow<DataState<Genre>>(DataState())
     val genreState: StateFlow<DataState<Genre>> get() = _genre.asStateFlow()
 
-    private val _moviesState: MutableStateFlow<PagingData<Movie>> = MutableStateFlow(value = PagingData.empty())
-     val moviesState: StateFlow<PagingData<Movie>> get() = _moviesState
+    private val _moviesState: MutableStateFlow<PagingData<Movie>> =
+        MutableStateFlow(value = PagingData.empty())
+    val moviesState: StateFlow<PagingData<Movie>> get() = _moviesState
 
     init {
         onEvent(MovieListEvent.Init)
@@ -45,7 +45,7 @@ class MovieListViewModel @Inject constructor(
 
     fun onEvent(event: MovieListEvent) {
         viewModelScope.launch {
-            when(event) {
+            when (event) {
                 MovieListEvent.Init -> {
                     getGenre()
                     getMovieList()
@@ -58,20 +58,20 @@ class MovieListViewModel @Inject constructor(
         getGenreById(genreId)
             .distinctUntilChanged()
             .collect { resource ->
-            when (resource) {
-                is Resource.Error -> {
-                    _genre.value = DataState(errorMessage = resource.message)
-                }
+                when (resource) {
+                    is Resource.Error -> {
+                        _genre.value = DataState(errorMessage = resource.message)
+                    }
 
-                is Resource.Loading -> {
-                    _genre.value = DataState(isLoading = true)
-                }
+                    is Resource.Loading -> {
+                        _genre.value = DataState(isLoading = true)
+                    }
 
-                is Resource.Success -> {
-                    _genre.value = DataState(data = resource.data)
+                    is Resource.Success -> {
+                        _genre.value = DataState(data = resource.data)
+                    }
                 }
             }
-        }
     }
 
     private suspend fun getMovieList() {

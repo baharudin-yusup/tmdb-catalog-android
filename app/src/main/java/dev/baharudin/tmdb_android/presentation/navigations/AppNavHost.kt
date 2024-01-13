@@ -2,9 +2,6 @@ package dev.baharudin.tmdb_android.presentation.navigations
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,7 +10,6 @@ import dev.baharudin.tmdb_android.presentation.screens.detail.MovieDetailScreen
 import dev.baharudin.tmdb_android.presentation.screens.favorite_movie_list.FavoriteMovieListScreen
 import dev.baharudin.tmdb_android.presentation.screens.home.HomeScreen
 import dev.baharudin.tmdb_android.presentation.screens.movie_list.MovieListScreen
-import dev.baharudin.tmdb_android.presentation.screens.movie_list.MovieListViewModel
 
 @Composable
 fun AppNavHost(

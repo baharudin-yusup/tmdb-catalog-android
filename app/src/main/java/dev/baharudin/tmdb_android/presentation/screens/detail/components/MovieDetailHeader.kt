@@ -26,13 +26,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import dev.baharudin.tmdb_android.R
-import dev.baharudin.tmdb_android.core.R as CoreR
 import dev.baharudin.tmdb_android.core.domain.entities.Genre
 import dev.baharudin.tmdb_android.core.domain.entities.Movie
 import dev.baharudin.tmdb_android.core.presentation.common.utils.toImageUrl
+import dev.baharudin.tmdb_android.core.R as CoreR
 
 @Composable
 fun MovieDetailHeader(
@@ -111,8 +110,7 @@ fun MovieDetailHeader(
 
             // Icons
             Column(
-                modifier = Modifier.
-                fillMaxHeight()
+                modifier = Modifier.fillMaxHeight()
             ) {
                 IconButton(
                     onClick = { onFavoriteClicked() },

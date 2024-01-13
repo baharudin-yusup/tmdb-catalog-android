@@ -1,19 +1,14 @@
 package dev.baharudin.tmdb_android.presentation.screens.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.baharudin.tmdb_android.core.domain.entities.Resource
 import dev.baharudin.tmdb_android.core.domain.entities.Movie
+import dev.baharudin.tmdb_android.core.domain.entities.Resource
 import dev.baharudin.tmdb_android.core.domain.usecases.AddToFavoriteMovie
 import dev.baharudin.tmdb_android.core.domain.usecases.GetMovieDetail
 import dev.baharudin.tmdb_android.core.domain.usecases.GetMovieReviews
@@ -49,7 +44,7 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun toggleFavoriteButton() {
-        _movie.value?.data?.let {movie ->
+        _movie.value?.data?.let { movie ->
             if (movie.isFavorite) {
                 removeFromFavoriteMovie(movie)
                     .onEach { mapMovieDetail(it) }

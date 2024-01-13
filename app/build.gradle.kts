@@ -124,4 +124,5 @@ dependencies {
 
     // UI
     applyComposeUiDependencies()
+    applyPagingDependencies()
 }
