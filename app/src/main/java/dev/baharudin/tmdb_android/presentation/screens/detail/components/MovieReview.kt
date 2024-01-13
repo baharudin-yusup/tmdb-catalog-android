@@ -14,10 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import dev.baharudin.tmdb_android.R
 import dev.baharudin.tmdb_android.core.domain.entities.Review
 import dev.baharudin.tmdb_android.core.presentation.common.components.RetrySection

@@ -1,5 +1,7 @@
 ![App Banner](docs/images/app-banner.png)
 
+<a href='https://play.google.com/store/apps/details?id=dev.baharudin.tmdb_android&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='docs/images/google-play-badge.png' style="width: auto; height: 50px;"/></a>
+
 # TMDB Catalog
 
 [![Build Status](https://github.com/baharudin-yusup/tmdb-android/actions/workflows/main_build_release.yml/badge.svg)](https://github.com/baharudin-yusup/tmdb-android/actions/workflows/main_build_release.yml)

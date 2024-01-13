@@ -3,7 +3,6 @@ package dev.baharudin.tmdb_android.core.data.sources.remote
 import dev.baharudin.tmdb_android.core.data.models.remote.get_genre_list.GetGenreListResponse
 import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_detail.MovieDetailResponse
 import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_list.GetMovieListResponse
-import dev.baharudin.tmdb_android.core.data.models.remote.get_movie_list.MovieResponse
 import dev.baharudin.tmdb_android.core.data.models.remote.get_review_list.GetReviewListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

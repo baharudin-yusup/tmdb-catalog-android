@@ -1,9 +1,6 @@
 package dev.baharudin.tmdb_android.core.data.models.remote.get_movie_detail
 
 import com.google.gson.annotations.SerializedName
-import dev.baharudin.tmdb_android.ProductionCompanies
-import dev.baharudin.tmdb_android.ProductionCountries
-import dev.baharudin.tmdb_android.SpokenLanguages
 import dev.baharudin.tmdb_android.core.data.models.remote.get_genre_list.GenreResponse
 
 
