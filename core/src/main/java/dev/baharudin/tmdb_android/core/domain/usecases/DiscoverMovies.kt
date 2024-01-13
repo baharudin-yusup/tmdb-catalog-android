@@ -15,13 +15,14 @@ class DiscoverMovies @Inject constructor(
     companion object {
         const val TAG = "(UC) DiscoverMovies"
     }
+
     operator fun invoke(genre: Genre): Flow<PagingData<Movie>> {
         Log.d(TAG, "invoke: get movies by $genre")
-        return movieRepository.discoverMoviesByGenre(genre);
+        return movieRepository.discoverMoviesByGenre(genre)
     }
 
     operator fun invoke(genreName: String): Flow<PagingData<Movie>> {
         Log.d(TAG, "invoke: get movies by $genreName")
-        return movieRepository.discoverMoviesByGenre(genreName);
+        return movieRepository.discoverMoviesByGenre(genreName)
     }
 }

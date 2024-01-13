@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.baharudin.tmdb_android.core.data.models.remote.get_review_list.ReviewResponse
 import dev.baharudin.tmdb_android.core.data.sources.remote.TheMovieDBApi
-import dev.baharudin.tmdb_android.core.domain.entities.Movie
 import retrofit2.HttpException
 import java.io.IOException
 
