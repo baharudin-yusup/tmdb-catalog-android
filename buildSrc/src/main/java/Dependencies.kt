@@ -1,12 +1,6 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 object Dependencies {
-    // Navigation
-    const val NAVIGATION_FRAGMENT =
-        "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
-    const val NAVIGATION_UI =
-        "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
-
     // Network
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
     const val RETROFIT_CONVERTER_GSON = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}"
@@ -21,14 +15,10 @@ object Dependencies {
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
 
     // Lifecycle
-    const val LIFECYCLE_VIEWMODEL =
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE}"
-    const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE}"
-    const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE}"
+    const val LIFECYCLE_VIEWMODEL_COMPOSE =
+        "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.LIFECYCLE}"
 
-    // Dagger Hilt
-    const val DAGGER = "com.google.dagger:dagger:${Versions.DAGGER}"
-    const val DAGGER_COMPILER = "com.google.dagger:dagger:${Versions.DAGGER}"
+    // Hilt
     const val HILT_ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val HILT_COMPILER = "com.google.dagger:hilt-compiler:${Versions.HILT}"
     const val HILT_NAVIGATION_COMPOSE = "androidx.hilt:hilt-navigation-compose:1.0.0"
@@ -60,77 +50,36 @@ object Dependencies {
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAVIGATION}"
 }
 
-private fun DependencyHandler.implementation(dependency: Any) {
+fun DependencyHandler.implementation(dependency: Any) {
     add("implementation", dependency)
 }
 
-private fun DependencyHandler.debugImplementation(dependency: Any) {
+fun DependencyHandler.debugImplementation(dependency: Any) {
     add("debugImplementation", dependency)
 }
 
 
-private fun DependencyHandler.ksp(dependency: Any) {
+fun DependencyHandler.ksp(dependency: Any) {
     add("ksp", dependency)
 }
 
-private fun DependencyHandler.testImplementation(dependency: Any) {
+fun DependencyHandler.testImplementation(dependency: Any) {
     add("testImplementation", dependency)
 }
 
-private fun DependencyHandler.androidTestImplementation(dependency: Any) {
+fun DependencyHandler.androidTestImplementation(dependency: Any) {
     add("androidTestImplementation", dependency)
 }
 
-private fun DependencyHandler.annotationProcessor(dependency: Any) {
+fun DependencyHandler.annotationProcessor(dependency: Any) {
     add("annotationProcessor", dependency)
 }
 
-fun DependencyHandler.applyNetworkDependencies() {
-    implementation(Dependencies.RETROFIT)
-    implementation(Dependencies.RETROFIT_CONVERTER_GSON)
-    implementation(Dependencies.OKHTTP)
-    implementation(Dependencies.OKHTTP_LOGGING_INTERCEPTOR)
-}
 
-fun DependencyHandler.applyCoroutinesDependencies() {
-    implementation(Dependencies.COROUTINES_CORE)
-    implementation(Dependencies.COROUTINES_ANDROID)
-}
 
-fun DependencyHandler.applyLifecycleDependencies() {
-    implementation(Dependencies.LIFECYCLE_VIEWMODEL)
-    implementation(Dependencies.LIFECYCLE_RUNTIME)
-    implementation(Dependencies.LIFECYCLE_LIVEDATA)
-}
 
-fun DependencyHandler.applyDaggerDependencies() {
-    implementation(Dependencies.DAGGER)
-    ksp(Dependencies.DAGGER_COMPILER)
-}
 
-fun DependencyHandler.applyHiltDependencies() {
-    implementation(Dependencies.HILT_ANDROID)
-    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
-    implementation(Dependencies.HILT_NAVIGATION_COMPOSE)
-    ksp(Dependencies.HILT_COMPILER)
-}
 
-fun DependencyHandler.applyPagingDependencies() {
-    implementation(Dependencies.PAGING_RUNTIME)
-    implementation(Dependencies.PAGING_COMPOSE)
-}
-
-fun DependencyHandler.applyLocalDbDependencies() {
-    implementation(Dependencies.ROOM)
-    implementation(Dependencies.ROOM_RUNTIME)
-    implementation(Dependencies.ROOM_PAGING)
-    annotationProcessor(Dependencies.ROOM_COMPILER)
-    testImplementation(Dependencies.ROOM_TESTING)
-    ksp(Dependencies.ROOM_COMPILER)
-
-    implementation(Dependencies.ANDROID_DATABASE_SQLCIPHER)
-    implementation(Dependencies.SQLITE)
-}
 
 fun DependencyHandler.applyGlideDependencies() {
     implementation(Dependencies.GLIDE)
@@ -138,49 +87,9 @@ fun DependencyHandler.applyGlideDependencies() {
     ksp(Dependencies.GLIDE_KSP)
 }
 
-fun DependencyHandler.applyBasicFunctionDependencies() {
-    implementation("androidx.core:core-ktx:1.12.0")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation(Dependencies.JUNIT_JUPITER)
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
 
-fun DependencyHandler.applyBasicUiDependencies() {
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation(Dependencies.NAVIGATION_FRAGMENT)
-    implementation(Dependencies.NAVIGATION_UI)
-}
 
-fun DependencyHandler.applyComposeUiDependencies() {
-    val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
-    implementation(composeBom)
-    androidTestImplementation(composeBom)
-    implementation("androidx.compose.ui:ui-graphics")
-    // Material Design 3
-    implementation("androidx.compose.material3:material3:1.2.0-beta01")
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    // Optional - Integration with activities
-    implementation("androidx.activity:activity-compose:1.8.2")
-    // Optional - Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
-    // Optional - Integration with LiveData
-    implementation("androidx.compose.runtime:runtime-livedata")
 
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-compose:2.5.0")
 
-    implementation(Dependencies.NAVIGATION_COMPOSE)
-}
+
+
